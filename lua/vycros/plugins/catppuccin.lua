@@ -12,6 +12,7 @@ return {
 				enabled = false,
 			},
 			integrations = {
+				treesitter = true
 			}
 		})
 	end,
