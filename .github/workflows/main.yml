@@ -28,5 +28,5 @@ jobs:
           body:
             This is a authomatic PR creation
           delete_branch: true
-          branch: feature/
+          branch: feature
           token: ${{ secrets.TOKEN }}
