@@ -27,6 +27,5 @@ jobs:
           author: ${{ env.GIT_COMMIT_AUTHOR_NAME }} <${{ env.GIT_COMMIT_AUTHOR_EMAIL }}>
           body:
             This is a authomatic PR creation
-          delete_branch: true
-          branch: feature
+          delete-branch: true
           token: ${{ secrets.TOKEN }}
