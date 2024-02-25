@@ -1,4 +1,4 @@
--- require("vycros.core")
+require("vycros.core")
 require("vycros.lazy")
 
 
