@@ -22,4 +22,4 @@ jobs:
           EOF
           )
         env:
-          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TOKEN: ${{ secrets.TOKEN }}
