@@ -12,7 +12,8 @@ return {
 				enabled = false,
 			},
 			integrations = {
-				treesitter = true
+				treesitter = true,
+				nvimtree = true,
 			}
 		})
 	end,

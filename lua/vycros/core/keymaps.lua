@@ -41,3 +41,18 @@ keymap.set("i", "<C-z>", "<cmd>:undo<CR>",{desc = "Undo using <C-z>", silent = t
 
 -- Delete a word backwards
 keymap.set("n", "dw", 'vb"_d')
+
+-- Move cursor to the left window
+keymap.set("n", "<C-h>", "<C-W>h")
+
+-- Move cursor to the right window
+keymap.set("n", "<C-l>", "<C-W>l")
+
+-- Move cursor to the top window
+keymap.set("n", "<C-j>", "<C-W>k")
+
+-- Move cursor to the bottom window
+keymap.set("n", "<C-k>", "<C-W>j")
+
+-- Toggle tree view
+keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", { noremap = true, silent = true })
