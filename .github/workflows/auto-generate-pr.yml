@@ -8,6 +8,7 @@ env:
   BRANCH_NAME: ${{ github.head_ref }}
 jobs:
   create-pr:
+    runs-on: ubuntu-latest
     steps:
       - name: Create Pull Request
         run: |
