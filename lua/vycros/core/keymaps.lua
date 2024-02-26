@@ -49,10 +49,10 @@ keymap.set("n", "<C-h>", "<C-W>h", {desc = "Move the cursor to the left window",
 keymap.set("n", "<C-l>", "<C-W>l", {desc = "Move the cursor to the right window", silent = true, noremap = true})
 
 -- Move cursor to the top window
-keymap.set("n", "<C-j>", "<C-W>k", {desc = "Move the cursor to the top window", silent = true, noremap = true})
+keymap.set("n", "<C-j>", "<C-W>k", { desc = "Move the cursor to the top window", silent = true, noremap = true})
 
 -- Move cursor to the bottom window
-keymap.set("n", "<C-k>", "<C-W>j", {desc = "Move the cursor to the bottom window", silent = true, noremap = true})
+keymap.set("n", "<C-k>", "<C-W>j", { desc = "Move the cursor to the bottom window", silent = true, noremap = true})
 
 -- Toggle tree view
 keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle the Nvim Tree", noremap = true, silent = true })
