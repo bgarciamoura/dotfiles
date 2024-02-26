@@ -21,9 +21,5 @@ jobs:
             }
           EOF
           )
-          curl https://api.github.com/repos/my-user/other-repo/pulls \
-            --header "Authorization: token ${ TOKEN }" \
-            -H "Content-Type:application/json" \
-            -d "$PAYLOAD"
         env:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
