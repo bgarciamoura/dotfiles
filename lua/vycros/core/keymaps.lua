@@ -40,19 +40,19 @@ keymap.set("n", "<C-z>", ":undo<CR>",{desc = "Undo using <C-z>", silent = true, 
 keymap.set("i", "<C-z>", "<cmd>:undo<CR>",{desc = "Undo using <C-z>", silent = true, noremap = true})
 
 -- Delete a word backwards
-keymap.set("n", "dw", 'vb"_d')
+keymap.set("n", "dw", 'vb"_d', {desc = "Delete a word backwards", silent = true, noremap = true})
 
 -- Move cursor to the left window
-keymap.set("n", "<C-h>", "<C-W>h")
+keymap.set("n", "<C-h>", "<C-W>h", {desc = "Move the cursor to the left window", silent = true, noremap = true})
 
 -- Move cursor to the right window
-keymap.set("n", "<C-l>", "<C-W>l")
+keymap.set("n", "<C-l>", "<C-W>l", {desc = "Move the cursor to the right window", silent = true, noremap = true})
 
 -- Move cursor to the top window
-keymap.set("n", "<C-j>", "<C-W>k")
+keymap.set("n", "<C-j>", "<C-W>k", {desc = "Move the cursor to the top window", silent = true, noremap = true})
 
 -- Move cursor to the bottom window
-keymap.set("n", "<C-k>", "<C-W>j")
+keymap.set("n", "<C-k>", "<C-W>j", {desc = "Move the cursor to the bottom window", silent = true, noremap = true})
 
 -- Toggle tree view
-keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", { noremap = true, silent = true })
+keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle the Nvim Tree", noremap = true, silent = true })
