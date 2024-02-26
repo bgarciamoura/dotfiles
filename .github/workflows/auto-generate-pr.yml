@@ -4,22 +4,14 @@ on:
   push:
     branches:
       - feature/*
-env:
-  BRANCH_NAME: ${{ github.head_ref }}
 jobs:
   create-pr:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Create Pull Request
-        run: |
-          PAYLOAD=$(cat <<EOF
-            {
-              "title": "Title of my PR",
-              "body": "Automated PR to ...",
-              "head": "${BRANCH_NAME}",
-              "base": "main"
-            }
-          EOF
-          )
+        run: gh pr create -B main -H develop --title 'Merge Develop into Main' --body 'Created automatic Pull Request by Github action.'
         env:
-          TOKEN: ${{ secrets.TOKEN }}
+            GITHUB_TOKEN: ${{ secrets.TOKEN }}
