@@ -5,10 +5,10 @@ return {
 
 	config = function() 
 		require("mini.indentscope").setup({
-			symbol = "▏",
+			symbol = "│",
 			draw = { delay = 0 },
 			options = {
-				indent_at_cursor = true,
+				indent_at_cursor = false,
 			},
 		})
 		
