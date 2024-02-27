@@ -7,11 +7,35 @@ on:
 jobs:
   create-pr:
     runs-on: ubuntu-latest
+    env:
+      PR_NUMBER: ""
     steps:
+      - name: Setup GitHub CLI
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install jq
+        run: sudo apt-get install jq
+
       - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Create Pull Request
-        run: gh pr create -B main --title 'Merge Develop into Main' --body 'Created automatic Pull Request by Github action.'
+        run: gh pr create -a @me -B main --title 'Automatic PR creation to merge into main' --body 'Created an automatic Pull Request using Github CLI'
+        env:
+            GITHUB_TOKEN: ${{ secrets.TOKEN }}
+
+      - name: List last PR
+        run: |
+          PR_NUMBER=$(gh pr list --limit 1 --json number --jq '.[0].number')
+          echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
+        env:
+            GITHUB_TOKEN: ${{ secrets.TOKEN }}
+
+      - name: Merge PR
+        if: ${{ env.PR_NUMBER }}
+        run: |
+          gh pr merge $PR_NUMBER --auto --merge
         env:
             GITHUB_TOKEN: ${{ secrets.TOKEN }}
