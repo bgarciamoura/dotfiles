@@ -21,6 +21,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Create or Update Pull Request
+        id: create_or_update_pr
+        run: |
+          PR_NUMBER=$(gh pr list --limit 1 --json number,state --jq '.[] | select(.state=="open") | .number')
+          if [ -z "$PR_NUMBER" ]; then
+            gh pr create -a @me -B main --title 'Automatic PR creation to merge into main' --body 'Created an automatic Pull Request using Github CLI'
+          else
+            gh pr update $PR_NUMBER --title 'Updated PR' --body 'Updated the pull request with new changes'
+          fi
+        env:
+            GITHUB_TOKEN: ${{ secrets.TOKEN }}
+
       - name: Create Pull Request
         run: gh pr create -a @me -B main --title 'Automatic PR creation to merge into main' --body 'Created an automatic Pull Request using Github CLI'
         env:
