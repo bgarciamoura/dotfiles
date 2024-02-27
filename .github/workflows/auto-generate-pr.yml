@@ -24,10 +24,24 @@ jobs:
         env:
             GITHUB_TOKEN: ${{ secrets.TOKEN }}
       
-      - name: Merge Pull Request
-        run:  |
+      - name: Check for PR creation
+        run: |
           pr_url=$(gh pr list --json url | jq -r '.[].url')
-          pr_number=$(echo $pr_url | cut -d'/' -f 7)
+          if [ -z "$pr_url" ]; then
+            echo "Failed to create pull request."
+            exit 1
+          fi
+
+      - name: Extract PR number
+        id: extract_pr_number
+        run: echo "::set-output name=pr_number::$(echo $pr_url | cut -d'/' -f 7)"
+      
+      - name: Check for merge conflicts
+        run: gh pr check --exit-code ${{ steps.extract_pr_number.outputs.pr_number }}
+      
+      - name: Merge PR
+        run: |
+          pr_number=${{ steps.extract_pr_number.outputs.pr_number }}
           gh pr merge $pr_number --auto
         env:
             GITHUB_TOKEN: ${{ secrets.TOKEN }}
