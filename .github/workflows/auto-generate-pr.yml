@@ -16,7 +16,7 @@ jobs:
           python-version: '3.x'
 
       - name: Install jq
-        run: sudo apt-get install jq
+        run: sudo apt install jq
 
       - name: Checkout code
         uses: actions/checkout@v3
@@ -32,6 +32,9 @@ jobs:
           echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
         env:
             GITHUB_TOKEN: ${{ secrets.TOKEN }}
+  
+      - name: Fetch the main branch
+        run: git fetch origin main
 
       - name: Merge PR
         if: ${{ env.PR_NUMBER }}
