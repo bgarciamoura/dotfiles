@@ -60,5 +60,6 @@ keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle the Nvi
 -- Copy the whole file to system clipboard
 keymap.set("n", "<leader>cc", ":keepjumps normal! ggVG \"*yG<CR>", { desc = "Copy the entire file to system clipboard", noremap = true, silent = true })
 
-
+-- Copy the line to system clipboard
+keymap.set("n", "<leader>cl", "\"*yy", { desc = "Copy the current line to system clipboard", noremap = true, silent = true })
 
