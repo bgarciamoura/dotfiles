@@ -18,8 +18,8 @@ jobs:
       
       - name: Merge Pull Request
         run:  |
-          pr_url=$(gh pr list --json url | jq -r '.[].url')
-          pr_number=$(echo $pr_url | cut -d'/' -f 7)
-          gh pr merge $pr_number --auto       
+          pr_url=$(gh pr list --json url | grep 'url' | head -n 1 | cut -d'"' -f 4)
+          pr_number=$(basename $pr_url)
+          gh pr merge $pr_number --auto
         env:
             GITHUB_TOKEN: ${{ secrets.TOKEN }}
