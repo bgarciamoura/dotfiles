@@ -7,6 +7,8 @@ on:
 jobs:
   create-pr:
     runs-on: ubuntu-latest
+    env:
+      PR_NUMBER: ""
     steps:
       - name: Setup GitHub CLI
         uses: actions/setup-python@v2
@@ -23,8 +25,17 @@ jobs:
         run: gh pr create -a @me -B main --title 'Automatic PR creation to merge into main' --body 'Created an automatic Pull Request using Github CLI'
         env:
             GITHUB_TOKEN: ${{ secrets.TOKEN }}
-      
+
+      - name: List last PR
+        run: |
+          PR_NUMBER=$(gh pr list --limit 1 --sort created --json number --jq '.[0].number')
+          echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
+        env:
+            GITHUB_TOKEN: ${{ secrets.TOKEN }}
+
       - name: Merge PR
-        run: gh pr merge --auto
+        if: ${{ env.PR_NUMBER }}
+        run: |
+          gh pr merge $PR_NUMBER --auto
         env:
             GITHUB_TOKEN: ${{ secrets.TOKEN }}
