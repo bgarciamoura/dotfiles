@@ -17,6 +17,8 @@ return {
 			}
 		})
 
+		telescope.load_extension("session-lens")
+
 		-- Telescope keymappings
 		keymap.set({"n","v","x"}, "<leader>ff", builtin.find_files, { desc = "Open the telescope plugin UI to find files", noremap = true, silent = true })
 		keymap.set({"n","v","x"}, "<leader>fg", builtin.live_grep, { desc = "Open the telescope UI to live grep", noremap = true, silent = true })
@@ -28,5 +30,6 @@ return {
 		keymap.set({"n","v","x"}, "<leader>ft", builtin.colorscheme, { desc = "List available colorschemes and applies them on <CR>", noremap = true, silent = true })
 		keymap.set({"n","v","x"}, "<leader>fv", builtin.vim_options, { desc = "List vim options and allows to edit the current value on <CR>", noremap = true, silent = true })
 		keymap.set({"n","v","x"}, "<leader>fk", builtin.keymaps, { desc = "List all normal mode keymaps", noremap = true, silent = true })
+		keymap.set({"n","v","x"}, "<leader>fs", ":SearchSession<CR>", { desc = "List all sessions saved by auto-session", noremap = true, silent = true })
 	end
 }

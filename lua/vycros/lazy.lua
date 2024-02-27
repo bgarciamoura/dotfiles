@@ -15,6 +15,9 @@ require("lazy").setup({
 	{ 
 		import = "vycros.plugins" 
 	},
+	{ 
+		import = "vycros.plugins.telescope" 
+	},
 },
 {
   checker = {
