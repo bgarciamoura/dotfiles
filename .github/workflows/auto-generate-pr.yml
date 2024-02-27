@@ -41,7 +41,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
       
       - name: Check for merge conflicts
-        run: gh pr check --exit-code ${{ steps.extract_pr_number.outputs.pr_number }}
+        run: gh pr checks ${{ steps.extract_pr_number.outputs.pr_number }} --fail-fast
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
       
