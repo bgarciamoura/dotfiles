@@ -56,3 +56,9 @@ keymap.set("n", "<C-k>", "<C-W>j", { desc = "Move the cursor to the bottom windo
 
 -- Toggle tree view
 keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle the Nvim Tree", noremap = true, silent = true })
+
+-- Copy the whole file to system clipboard
+keymap.set("n", "<leader>cc", ":keepjumps normal! ggVG \"*yG<CR>", { desc = "Copy the entire file to system clipboard", noremap = true, silent = true })
+
+
+
