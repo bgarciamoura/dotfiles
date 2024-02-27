@@ -17,6 +17,9 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.TOKEN }}
       
       - name: Merge Pull Request
-        run: gh pr merge --auto -d -m
+        run:  |
+          pr_url=$(gh pr list --json url | jq -r '.[].url')
+          pr_number=$(echo $pr_url | cut -d'/' -f 7)
+          gh pr merge $pr_number --auto       
         env:
             GITHUB_TOKEN: ${{ secrets.TOKEN }}
