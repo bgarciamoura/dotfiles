@@ -24,7 +24,7 @@ return {
 		keymap.set({"n","v","x"}, "<leader>fh", builtin.help_tags, { desc = "Open the telescope UI to find configs for plugins", noremap = true, silent = true })
 		keymap.set({"n","v","x"}, "<leader>fi", builtin.git_files, { desc = "Open the telescope UI to find only files that is in git repository", noremap = true, silent = true })
 		keymap.set({"n","v","x"}, "<leader>fo", builtin.oldfiles, { desc = "List the recently opened files", noremap = true, silent = true })
-		keymap.set({"n","v","x"}, "<leader>fc", builtin.commands, { desc = "Open the telescope UI to list plugin/user commands and runs them on <CR>", noremap = true, silent = true })
+		keymap.set({"n","v","x"}, "<leader>fc", builtin.commands, { desc = "List all plugins/user commands and runs on <CR>", noremap = true, silent = true })
 		keymap.set({"n","v","x"}, "<leader>ft", builtin.colorscheme, { desc = "List available colorschemes and applies them on <CR>", noremap = true, silent = true })
 		keymap.set({"n","v","x"}, "<leader>fv", builtin.vim_options, { desc = "List vim options and allows to edit the current value on <CR>", noremap = true, silent = true })
 		keymap.set({"n","v","x"}, "<leader>fk", builtin.keymaps, { desc = "List all normal mode keymaps", noremap = true, silent = true })
