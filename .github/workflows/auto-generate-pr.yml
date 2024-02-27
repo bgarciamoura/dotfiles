@@ -28,7 +28,7 @@ jobs:
 
       - name: List last PR
         run: |
-          PR_NUMBER=$(gh pr list --limit 1 --sort created --json number --jq '.[0].number')
+          PR_NUMBER=$(gh pr list --limit 1 --json number --jq '.[0].number')
           echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
         env:
             GITHUB_TOKEN: ${{ secrets.TOKEN }}
