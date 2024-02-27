@@ -31,13 +31,19 @@ jobs:
             echo "Failed to create pull request."
             exit 1
           fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
 
       - name: Extract PR number
         id: extract_pr_number
         run: echo "::set-output name=pr_number::$(echo $pr_url | cut -d'/' -f 7)"
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
       
       - name: Check for merge conflicts
         run: gh pr check --exit-code ${{ steps.extract_pr_number.outputs.pr_number }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
       
       - name: Merge PR
         run: |
