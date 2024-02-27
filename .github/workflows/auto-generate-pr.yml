@@ -16,9 +16,6 @@ jobs:
       - name: Install jq
         run: sudo apt-get install jq
 
-      - name: Authenticate with GitHub CLI
-        run: gh auth login --with-token < ${{ secrets.GITHUB_TOKEN }}
-
       - name: Checkout code
         uses: actions/checkout@v3
 
