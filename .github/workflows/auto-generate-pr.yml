@@ -32,6 +32,10 @@ jobs:
           echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
         env:
             GITHUB_TOKEN: ${{ secrets.TOKEN }}
+  
+      - name: Switch to main branch to delete source branch
+        run: |
+          git checkout main
 
       - name: Merge PR
         if: ${{ env.PR_NUMBER }}
