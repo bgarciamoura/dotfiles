@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Create Pull Request
-        run: gh pr create -a @me -B main --title 'Merge into Main' --fill-verbose
+        run: gh pr create -a @me -B main --fill-verbose
         env:
             GITHUB_TOKEN: ${{ secrets.TOKEN }}
       
