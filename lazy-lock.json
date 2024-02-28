@@ -1,4 +1,5 @@
 {
+  "arrow.nvim": { "branch": "master", "commit": "9d98760d9a195174a24b6ccc20217bc98f3596e0" },
   "auto-session": { "branch": "main", "commit": "29a8c77a0579636d5520aebd38bdbc2e6079f2f5" },
   "catppuccin": { "branch": "main", "commit": "c0de3b46811fe1ce3912e2245a9dfbea6b41c300" },
   "dressing.nvim": { "branch": "master", "commit": "6f212262061a2120e42da0d1e87326e8a41c0478" },
