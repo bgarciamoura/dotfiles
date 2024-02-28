@@ -1,0 +1,147 @@
+return {
+  "nvim-lualine/lualine.nvim",
+  dependencies = { "nvim-tree/nvim-web-devicons" },
+  config = function()
+    local colors = {
+      -- catppuccin mocha
+      Base = "#1E1E2E",
+      Crust = "#11111B",
+      Mantle = "#181825",
+      Surface0 = "#313244",
+      Surface1 = "#45475A",
+      Surface2 = "#585B70",
+      Overlay0 = "#6C7086",
+      Overlay1 = "#7F849C",
+      Overlay2 = "#9399B2",
+      Subtext0 = "#A6ACCB",
+      Subtext1 = "#BAC2DE",
+      Text0 = "#CDD6F4",
+      Lavender = "#B4BEFE",
+      Blue = "#8AB4FA",
+      Sapphire = "#74C7EC",
+      Sky = "#89DCEB",
+      Teal = "#94E2D5",
+      Green = "#A6E3A1",
+      Yellow = "#F9E2AF",
+      Peach = "#FAB387",
+      Maroon = "#EBA0AC",
+      Red = "#F38BA8",
+      Mauve = "#CBA6F7",
+      Pink = "#F5C2E7",
+      Flamingo = "#F2CDCD",
+      Rosewater = "#F5E0DC",
+    }
+
+    local theme = {
+      normal = {
+        a = { fg = colors.Text0, bg = colors.Surface0 },
+        b = { fg = colors.Base, bg = colors.Lavender },
+        c = { fg = colors.Base, bg = colors.Mantle },
+        z = { fg = colors.Text0, bg = colors.Base },
+      },
+      insert = { a = { fg = colors.Base, bg = colors.Lavender } },
+      visual = { a = { fg = colors.Base, bg = colors.Peach } },
+      replace = { a = { fg = colors.Base, bg = colors.Yellow } },
+    }
+
+    local empty = require("lualine.component"):extend()
+    function empty:draw(default_highlight)
+      self.status = ""
+      self.applied_separator = ""
+      self:apply_highlights(default_highlight)
+      self:apply_section_separators()
+      return self.status
+    end
+
+    -- Put proper separators and gaps between components in sections
+    local function process_sections(sections)
+      for name, section in pairs(sections) do
+        local left = name:sub(9, 10) < "x"
+        for pos = 1, name ~= "lualine_z" and #section or #section - 1 do
+          table.insert(section, pos * 2, { empty, color = { fg = colors.Base, bg = colors.Base } })
+        end
+        for id, comp in ipairs(section) do
+          if type(comp) ~= "table" then
+            comp = { comp }
+            section[id] = comp
+          end
+          comp.separator = left and { right = "" } or { left = "" }
+        end
+      end
+      return sections
+    end
+
+    local function search_result()
+      if vim.v.hlsearch == 0 then return "" end
+      local last_search = vim.fn.getreg("/")
+      if not last_search or last_search == "" then return "" end
+      local searchcount = vim.fn.searchcount({ maxcount = 9999 })
+      return last_search .. "(" .. searchcount.current .. "/" .. searchcount.total .. ")"
+    end
+
+    local function modified()
+      if vim.bo.modified then
+        return "+"
+      elseif vim.bo.modifiable == false or vim.bo.readonly == true then
+        return "-"
+      end
+      return ""
+    end
+
+    require("lualine").setup({
+      options = {
+        -- theme = "catppuccin",
+        theme = theme,
+        icons_enabled = true,
+        disabled_filetypes = {
+          statusline = { "NvimTree" },
+        },
+        section_separators = { left = "", right = "" },
+        component_separators = "",
+      },
+      sections = process_sections({
+        lualine_a = { "mode" },
+        lualine_b = {
+          { "branch", color = { bg = colors.Flamingo } },
+          "diff",
+          {
+            "diagnostics",
+            source = { "nvim" },
+            sections = { "error" },
+            diagnostics_color = { error = { bg = colors.Red, fg = colors.Text0 } },
+          },
+          {
+            "diagnostics",
+            source = { "nvim" },
+            sections = { "warn" },
+            diagnostics_color = { warn = { bg = colors.Yellow, fg = colors.Text0 } },
+          },
+          { "filename", file_status = false, path = 1 },
+          { modified, color = { bg = colors.Maroon } },
+          {
+            "%w",
+            cond = function() return vim.wo.previewwindow end,
+          },
+          {
+            "%r",
+            cond = function() return vim.bo.readonly end,
+          },
+          {
+            "%q",
+            cond = function() return vim.bo.buftype == "quickfix" end,
+          },
+        },
+        lualine_c = {},
+        lualine_x = {},
+        lualine_y = { search_result, "filetype" },
+        lualine_z = { "%l:%c", "%p%%/%L" },
+      }),
+      inactive_sections = {
+        lualine_c = { "%f %y %m" },
+        lualine_x = {},
+      },
+      tabline = {},
+      extensions = {},
+    })
+  end,
+}
