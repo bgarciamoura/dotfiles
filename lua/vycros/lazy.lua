@@ -11,15 +11,17 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup({ 
-	{ 
-		import = "vycros.plugins" 
-	},
-	{ 
-		import = "vycros.plugins.telescope" 
-	},
-},
-{
+require("lazy").setup({
+  {
+    import = "vycros.plugins",
+  },
+  {
+    import = "vycros.plugins.telescope",
+  },
+  {
+    import = "vycros.plugins.lsp-mason",
+  },
+}, {
   checker = {
     enabled = true,
     notify = false,
