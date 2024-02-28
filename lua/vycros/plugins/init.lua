@@ -3,4 +3,5 @@ return {
   "nvim-tree/nvim-web-devicons",
   "stevearc/dressing.nvim",
   "tpope/vim-commentary",
+  "windwp/nvim-ts-autotag",
 }

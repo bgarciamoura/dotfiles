@@ -121,7 +121,7 @@ return {
       mapping = cmp.mapping.preset.insert({
         ["<C-Space>"] = cmp.mapping.complete(),
         ["<C-e>"] = cmp.mapping.close(),
-        ["<CR>"] = cmp.mapping.confirm({ select = true }),
+        ["<CR>"] = cmp.mapping.confirm({ select = false }),
         ["<C-b>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "s" }),
         ["<Up>"] = cmp.mapping.select_prev_item(select_opts),
         ["<Down>"] = cmp.mapping.select_next_item(select_opts),
