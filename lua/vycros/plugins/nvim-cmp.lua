@@ -26,7 +26,7 @@ return {
     { "hrsh7th/vim-vsnip" },
     { "hrsh7th/vim-vsnip-integ" },
     { "rafamadriz/friendly-snippets" },
-		{ 'stevearc/vim-vscode-snippets' },
+    { "stevearc/vim-vscode-snippets" },
   },
   event = "InsertEnter",
   config = function()
@@ -65,6 +65,7 @@ return {
         { name = "dotenv", keyword_length = 2 },
         { name = "copilot", keyword_length = 2 },
         { name = "npm", keyword_length = 2 },
+        { name = "emoji" },
         { name = "plugins", keyword_length = 2 },
       },
       window = {
@@ -152,4 +153,3 @@ return {
     })
   end,
 }
-

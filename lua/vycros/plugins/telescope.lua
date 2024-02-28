@@ -20,6 +20,7 @@ return {
 
     telescope.load_extension("session-lens")
     telescope.load_extension("themes")
+    telescope.load_extension("emoji")
 
     -- Telescope keymappings
     keymap.set(
@@ -46,16 +47,11 @@ return {
       builtin.help_tags,
       { desc = "Open the telescope UI to find configs for plugins", noremap = true, silent = true }
     )
-    keymap.set(
-      { "n", "v", "x" },
-      "<leader>fi",
-      builtin.git_files,
-      {
-        desc = "Open the telescope UI to find only files that is in git repository",
-        noremap = true,
-        silent = true,
-      }
-    )
+    keymap.set({ "n", "v", "x" }, "<leader>fi", builtin.git_files, {
+      desc = "Open the telescope UI to find only files that is in git repository",
+      noremap = true,
+      silent = true,
+    })
     keymap.set(
       { "n", "v", "x" },
       "<leader>fo",
@@ -68,16 +64,11 @@ return {
       builtin.commands,
       { desc = "List all plugins/user commands and runs on <CR>", noremap = true, silent = true }
     )
-    keymap.set(
-      { "n", "v", "x" },
-      "<leader>fv",
-      builtin.vim_options,
-      {
-        desc = "List vim options and allows to edit the current value on <CR>",
-        noremap = true,
-        silent = true,
-      }
-    )
+    keymap.set({ "n", "v", "x" }, "<leader>fv", builtin.vim_options, {
+      desc = "List vim options and allows to edit the current value on <CR>",
+      noremap = true,
+      silent = true,
+    })
     keymap.set(
       { "n", "v", "x" },
       "<leader>fk",
@@ -95,6 +86,12 @@ return {
       "<leader>ft",
       ":Telescope themes<CR>",
       { desc = "Change the current theme", noremap = true, silent = true }
+    )
+    keymap.set(
+      { "n", "v", "x" },
+      "<leader>fe",
+      ":Telescope emoji<CR>",
+      { desc = "Shows a list of emojis", noremap = true, silent = true }
     )
   end,
 }
