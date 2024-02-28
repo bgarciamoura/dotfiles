@@ -2,6 +2,8 @@ return {
   "williamboman/mason-lspconfig.nvim",
   config = function()
     local lspconfig = require("lspconfig")
+    local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
+
     require("mason-lspconfig").setup({
       ensure_installed = {
         "lua_ls",
@@ -12,9 +14,14 @@ return {
         "eslint",
       },
       handlers = {
-        function(server) lspconfig[server].setup({}) end,
+        function(server)
+          lspconfig[server].setup({
+            capabilities = lsp_capabilities,
+          })
+        end,
         ["lua_ls"] = function()
           lspconfig.lua_ls.setup({
+            capabilities = lsp_capabilities,
             settings = {
               Lua = {
                 diagnostics = {
@@ -26,6 +33,7 @@ return {
         end,
         ["tsserver"] = function()
           lspconfig.tsserver.setup({
+            capabilities = lsp_capabilities,
             settings = {
               completions = {
                 completeFunctionCalls = true,
@@ -45,6 +53,7 @@ return {
         end,
         ["eslint"] = function()
           lspconfig.eslint.setup({
+            capabilities = lsp_capabilities,
             cmd = { "eslint_d", "--stdio" },
             filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
             root_dir = lspconfig.util.root_pattern(
@@ -59,6 +68,7 @@ return {
         end,
         ["angularls"] = function()
           lspconfig.angularls.setup({
+            capabilities = lsp_capabilities,
             cmd = { "ngserver", "--stdio" },
             filetypes = { "typescript", "typescriptreact", "html" },
             root_dir = lspconfig.util.root_pattern("angular.json", "tsconfig.json"),
