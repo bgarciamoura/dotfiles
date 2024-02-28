@@ -11,8 +11,19 @@ return {
       indent = { enable = true },
       ensure_installed = {
         "lua",
+        "javascript",
+        "typescript",
+        "tsx",
+        "json",
+        "yaml",
+        "html",
+        "css",
+        "scss",
       },
       incremental_selection = {
+        enable = true,
+      },
+      autotag = {
         enable = true,
       },
     })
