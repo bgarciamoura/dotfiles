@@ -71,3 +71,6 @@ vim.cmd([[
     autocmd BufWritePre * lua _G.add_new_line()
   augroup END
 ]])
+
+-- Set the updatetime for cursorhold
+vim.opt.updatetime = 500
