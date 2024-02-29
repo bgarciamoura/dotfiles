@@ -36,7 +36,7 @@ return {
       normal = {
         a = { fg = colors.Text0, bg = colors.Surface0 },
         b = { fg = colors.Base, bg = colors.Lavender },
-        c = { fg = colors.Base, bg = colors.Mantle },
+        c = { fg = colors.Text0, bg = colors.Base },
         z = { fg = colors.Text0, bg = colors.Base },
       },
       insert = { a = { fg = colors.Base, bg = colors.Lavender } },
@@ -88,6 +88,8 @@ return {
       return ""
     end
 
+    local navic = require("nvim-navic")
+
     require("lualine").setup({
       options = {
         -- theme = "catppuccin",
@@ -103,7 +105,15 @@ return {
         lualine_a = { "mode" },
         lualine_b = {
           { "branch", color = { bg = colors.Flamingo } },
-          "diff",
+          {
+            "diff",
+            colored = true,
+            diff_color = {
+              added = { bg = colors.Green, fg = colors.Overlay0 },
+              modified = { bg = colors.Yellow, fg = colors.Overlay0 },
+              removed = { bg = colors.Red, fg = colors.Overlay0 },
+            },
+          },
           {
             "diagnostics",
             source = { "nvim" },
@@ -114,7 +124,7 @@ return {
             "diagnostics",
             source = { "nvim" },
             sections = { "warn" },
-            diagnostics_color = { warn = { bg = colors.Yellow, fg = colors.Text0 } },
+            diagnostics_color = { warn = { bg = colors.Yellow, fg = colors.Overlay0 } },
           },
           { "filename", file_status = false, path = 1 },
           { modified, color = { bg = colors.Maroon } },
@@ -132,7 +142,7 @@ return {
           },
         },
         lualine_c = {},
-        lualine_x = {},
+        lualine_x = { "encoding" },
         lualine_y = { search_result, "filetype" },
         lualine_z = { "%l:%c", "%p%%/%L" },
       }),
@@ -141,7 +151,12 @@ return {
         lualine_x = {},
       },
       tabline = {},
-      extensions = {},
+      winbar = {
+        lualine_c = {
+          { "navic", color_correction = nil, color = { bg = colors.Base, fg = colors.Text0 } },
+        },
+      },
+      extensions = { "nvim-tree" },
     })
   end,
 }
