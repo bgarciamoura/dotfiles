@@ -1,8 +1,3 @@
-local opt = vim.opt
-
--- Remove the ~ char on empty lines
--- opt.fillchars = { eob = "" }
-
 -- Disable netrw at the very start of your init.lua
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -57,20 +52,11 @@ vim.opt.smartindent = true
 --  end,
 --})
 
-_G.add_new_line = function()
-  local n_lines = vim.api.nvim_buf_line_count(0)
-  local last_nonblank = vim.fn.prevnonblank(n_lines)
-  if last_nonblank <= n_lines then
-    vim.api.nvim_buf_set_lines(0, last_nonblank, n_lines, true, { "" })
-  end
-end
-
-vim.cmd([[
-  augroup AddNewlineOnSave
-    autocmd!
-    autocmd BufWritePre * lua _G.add_new_line()
-  augroup END
-]])
-
 -- Set the updatetime for cursorhold
 vim.opt.updatetime = 500
+
+-- Set the signcolumn to always, this is the column that shows the signs like the diagnostic signs
+-- vim.opt.signcolumn = "yes"
+
+-- Set the signcolumn to a explict width
+vim.opt.signcolumn = "auto:1"
