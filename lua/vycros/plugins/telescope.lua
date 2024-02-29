@@ -89,6 +89,12 @@ return {
     )
     keymap.set(
       { "n", "v", "x" },
+      "<leader>fy",
+      ":Telescope neoclip<CR>",
+      { desc = "Shows a list of previous yanked texts", noremap = true, silent = true }
+    )
+    keymap.set(
+      { "n", "v", "x" },
       "<leader>fe",
       ":Telescope emoji<CR>",
       { desc = "Shows a list of emojis", noremap = true, silent = true }
