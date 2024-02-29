@@ -165,10 +165,18 @@ keymap.set(
 )
 
 -- obisidian follow link
-vim.keymap.set("n", "gf", function()
+keymap.set("n", "gf", function()
   if require("obsidian").util.cursor_on_markdown_link() then
     return "<cmd>ObsidianFollowLink<CR>"
   else
     return "gf"
   end
 end, { noremap = false, expr = true })
+
+-- Close all buffers excepts by the current one withou external plugins
+keymap.set(
+  "n",
+  "<leader>bd",
+  ":let current = bufnr('%')<CR>:bufdo if bufnr('%') != current | bd | endif<CR>",
+  { desc = "Close all buffers excepts by the current one", noremap = true, silent = true }
+)
