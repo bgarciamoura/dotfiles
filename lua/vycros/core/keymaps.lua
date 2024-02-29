@@ -180,3 +180,11 @@ keymap.set(
   ":let current = bufnr('%')<CR>:bufdo if bufnr('%') != current | bd | endif<CR>",
   { desc = "Close all buffers excepts by the current one", noremap = true, silent = true }
 )
+
+-- Close current buffer without external plugins
+keymap.set(
+  "n",
+  "<leader>bc",
+  ":bd<CR>",
+  { desc = "Close the current buffer", noremap = true, silent = true }
+)
