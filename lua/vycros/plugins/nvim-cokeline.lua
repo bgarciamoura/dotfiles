@@ -10,6 +10,7 @@ return {
       "nvim-tree/nvim-web-devicons",
     },
     config = function()
+      local get_hex = require("cokeline.hlgroups").get_hl_attr
       require("cokeline").setup({
         default_hl = {
           fg = function(buffer) return fg_color(buffer, colors) end,
@@ -46,7 +47,15 @@ return {
           },
         },
         sidebar = {
-          filetype = { "NvimTree" },
+          filetype = { "NvimTree", "neo-tree" },
+          components = {
+            {
+              text = function(buf) return buf.filetype end,
+              fg = colors.Sky,
+              bg = function() return get_hex("NvimTreeNormal", "bg") end,
+              bold = true,
+            },
+          },
         },
       })
     end,
