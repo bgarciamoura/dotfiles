@@ -1,0 +1,31 @@
+local Colors = {
+  -- catppuccin mocha
+  Base = "#1E1E2E",
+  Crust = "#11111B",
+  Mantle = "#181825",
+  Surface0 = "#313244",
+  Surface1 = "#45475A",
+  Surface2 = "#585B70",
+  Overlay0 = "#6C7086",
+  Overlay1 = "#7F849C",
+  Overlay2 = "#9399B2",
+  Subtext0 = "#A6ACCB",
+  Subtext1 = "#BAC2DE",
+  Text0 = "#CDD6F4",
+  Lavender = "#B4BEFE",
+  Blue = "#8AB4FA",
+  Sapphire = "#74C7EC",
+  Sky = "#89DCEB",
+  Teal = "#94E2D5",
+  Green = "#A6E3A1",
+  Yellow = "#F9E2AF",
+  Peach = "#FAB387",
+  Maroon = "#EBA0AC",
+  Red = "#F38BA8",
+  Mauve = "#CBA6F7",
+  Pink = "#F5C2E7",
+  Flamingo = "#F2CDCD",
+  Rosewater = "#F5E0DC",
+}
+
+return Colors
