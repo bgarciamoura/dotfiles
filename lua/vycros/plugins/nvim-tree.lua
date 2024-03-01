@@ -5,11 +5,11 @@ return {
   },
   config = function()
     local nvimTree = require("nvim-tree")
-    require("nvim-web-devicons").setup({
-      override = {
-        lua = { icon = "", color = "#FF0000", name = "Lua" },
-      },
-    })
+    -- require("nvim-web-devicons").setup({
+    --   override = {
+    --     lua = { icon = "", color = "#FF0000", name = "Lua" },
+    --   },
+    -- })
 
     local function custom_attach(bufnr)
       local api = require("nvim-tree.api")
