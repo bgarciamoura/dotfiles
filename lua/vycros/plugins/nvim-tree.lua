@@ -5,10 +5,14 @@ return {
   },
   config = function()
     local nvimTree = require("nvim-tree")
+    -- require("nvim-web-devicons").setup({
+    --   override = {
+    --     lua = { icon = "", color = "#FF0000", name = "Lua" },
+    --   },
+    -- })
 
     local function custom_attach(bufnr)
       local api = require("nvim-tree.api")
-
       local function opts(desc)
         return {
           desc = "nvim-tree: " .. desc,
@@ -100,12 +104,12 @@ return {
               symlink_open = "",
             },
             git = {
-              unstaged = "", -- 
-              staged = "",
+              unstaged = "󰷫", --"", -- 
+              staged = "󰄭", --"", --
               unmerged = "",
-              renamed = "➜",
-              untracked = "",
-              deleted = "",
+              renamed = "", -- "➜",
+              untracked = "󰐕", --"",
+              deleted = "󰛌", --"",
               ignored = "◌",
             },
           },
@@ -121,9 +125,9 @@ return {
         show_on_dirs = false,
         icons = {
           hint = "",
-          info = "",
-          warning = "",
-          error = "",
+          info = "󰋽", --"",
+          warning = "", --"",
+          error = "", --"",
         },
       },
     })
