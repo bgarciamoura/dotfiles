@@ -188,3 +188,12 @@ keymap.set(
   ":bd<CR>",
   { desc = "Close the current buffer", noremap = true, silent = true }
 )
+
+-- Move the cursor to indented line when press i
+vim.keymap.set("n", "i", function()
+  if #vim.fn.getline(".") == 0 then
+    return [["_cc]]
+  else
+    return "i"
+  end
+end, { expr = true, desc = "properly indent on empty line when insert" })
