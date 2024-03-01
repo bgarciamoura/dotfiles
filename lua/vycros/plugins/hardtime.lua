@@ -8,6 +8,13 @@ return {
       max_time = 500,
       max_count = 5,
       disable_mouse = false,
+      disabled_keys = {
+
+        ["<Down>"] = { "x", "n", "v" },
+        ["<Left>"] = { "x", "n", "v" },
+        ["<Right>"] = { "x", "n", "v" },
+        ["<Up>"] = { "x", "n", "v" },
+      },
     })
   end,
 }
