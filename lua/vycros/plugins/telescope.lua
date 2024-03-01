@@ -18,7 +18,7 @@ return {
       },
     })
 
-    telescope.load_extension("session-lens")
+    -- telescope.load_extension("session-lens")
     telescope.load_extension("themes")
     telescope.load_extension("emoji")
 
