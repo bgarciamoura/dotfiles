@@ -20,6 +20,9 @@ vim.opt.mouse = "a"
 -- Show line numbers
 vim.opt.number = true
 
+-- Show relative line numbers
+vim.opt.relativenumber = true
+
 -- disable the highlights of the previous search results
 vim.opt.hlsearch = false
 
