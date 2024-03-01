@@ -1,9 +1,10 @@
 return {
-  "nvim-lua/plenary.nvim",
-  "nvim-tree/nvim-web-devicons",
-  "stevearc/dressing.nvim",
-  "tpope/vim-commentary",
-  "windwp/nvim-ts-autotag",
+  { "nvim-lua/plenary.nvim" },
+  { "nvim-tree/nvim-web-devicons" },
+  { "stevearc/dressing.nvim" },
+  { "tpope/vim-commentary" },
+  { "windwp/nvim-ts-autotag" },
+  { "LudoPinelli/comment-box.nvim" },
 
   -- Themes
   { "rose-pine/neovim", name = "rose-pine" },

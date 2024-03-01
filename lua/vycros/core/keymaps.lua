@@ -2,7 +2,7 @@
 vim.g.mapleader = " "
 
 local keymap = vim.keymap
--- Window management
+-- ── Window management ───────────────────────────────────────────────
 keymap.set(
   "n",
   "sv",
@@ -197,3 +197,19 @@ vim.keymap.set("n", "i", function()
     return "i"
   end
 end, { expr = true, desc = "properly indent on empty line when insert" })
+
+-- Comment-box
+local opts = { noremap = true, silent = true }
+
+-- Titles
+keymap.set({ "n", "v" }, "<Leader>Cb", "<Cmd>CBccbox<CR>", { noremap = true, silent = true })
+-- Named parts
+keymap.set({ "n", "v" }, "<Leader>ct", "<Cmd>CBllline<CR>", { noremap = true, silent = true })
+-- Simple line
+keymap.set("n", "<Leader>cl", "<Cmd>CBline<CR>", { noremap = true, silent = true })
+-- keymap.set("i", "<M-l>", "<Cmd>CBline<CR>", { noremap = true, silent = true }) -- To use in Insert Mode
+-- Marked comments
+keymap.set({ "n", "v" }, "<Leader>cm", "<Cmd>CBllbox14<CR>", { noremap = true, silent = true })
+-- Removing a box is simple enough with the command (CBd), but if you
+-- use it a lot:
+keymap.set({ "n", "v" }, "<Leader>rcd", "<Cmd>CBd<CR>", { noremap = true, silent = true })
