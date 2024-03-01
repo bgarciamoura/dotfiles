@@ -19,6 +19,9 @@ return {
     -- Autocomplete from dotenv files
     { "SergioRibera/cmp-dotenv" },
 
+    -- Sources
+    { "chrisgrieser/cmp-nerdfont" },
+
     -- Snippets
     -- { "SirVer/ultisnips" },
     -- { "quangnguyen30192/cmp-nvim-ultisnips" },
@@ -66,6 +69,7 @@ return {
         { name = "copilot", keyword_length = 2 },
         { name = "npm", keyword_length = 2 },
         { name = "emoji" },
+        { name = "nerdfont" },
         { name = "plugins", keyword_length = 2 },
       },
       window = {
