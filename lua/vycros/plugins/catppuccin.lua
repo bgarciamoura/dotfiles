@@ -6,7 +6,7 @@ return {
     local catppuccin = require("catppuccin")
     catppuccin.setup({
       flavour = "mocha", -- latte, frappe, macchiato, mocha
-      transparent_background = false,
+      transparent_background = true,
       dim_inactive = {
         enabled = false,
       },

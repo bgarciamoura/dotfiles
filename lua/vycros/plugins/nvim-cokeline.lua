@@ -51,9 +51,10 @@ return {
           components = {
             {
               text = function(buf) return buf.filetype end,
-              fg = colors.Sky,
-              bg = function() return get_hex("NvimTreeNormal", "bg") end,
-              bold = true,
+              fg = colors.Red,
+              bg = colors.Base,
+              -- bg = function() return get_hex("NvimTreeNormal", "bg") end,
+              bold = false,
             },
           },
         },
