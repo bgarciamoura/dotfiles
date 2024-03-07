@@ -10,7 +10,6 @@ return {
       "nvim-tree/nvim-web-devicons",
     },
     config = function()
-      local get_hex = require("cokeline.hlgroups").get_hl_attr
       require("cokeline").setup({
         default_hl = {
           fg = function(buffer) return fg_color(buffer, colors) end,

@@ -6,6 +6,7 @@ return {
   { "windwp/nvim-ts-autotag" },
   { "LudoPinelli/comment-box.nvim" },
   { "wakatime/vim-wakatime", lazy = false },
+  { "pteroctopus/faster.nvim" },
 
   -- Themes
   { "rose-pine/neovim", name = "rose-pine" },
