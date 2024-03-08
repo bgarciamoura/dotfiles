@@ -1,5 +1,5 @@
-local function bg_color(buffer, colors) return buffer.is_focused and colors.Mauve or colors.Sky end
-local function fg_color(buffer, colors) return buffer.is_focused and colors.Base or colors.Subtext0 end
+local function bg_color(buffer, colors) return buffer.is_focused and colors.Base or colors.Base end
+local function fg_color(buffer, colors) return buffer.is_focused and colors.Text0 or colors.Subtext0 end
 local colors = require("vycros.core.colors")
 
 return {
@@ -17,9 +17,10 @@ return {
         },
         components = {
           {
-            text = "",
+            -- text = "",
+            text = "|",
             bg = function(buffer) return bg_color(buffer, colors) end,
-            fg = colors.Base,
+            fg = colors.Text0,
           },
           {
             text = function(buffer) return " " .. buffer.devicon.icon .. " " end,
