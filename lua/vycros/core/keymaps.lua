@@ -2,6 +2,14 @@
 vim.g.mapleader = " "
 
 local keymap = vim.keymap
+
+-- Duplicate line with alt D
+keymap.set(
+  "n",
+  "<A-d>",
+  "yyp",
+  { desc = "Duplicate the current line using <C-d>", silent = true, noremap = true }
+)
 -- ── Window management ───────────────────────────────────────────────
 keymap.set(
   "n",

@@ -51,7 +51,7 @@ return {
         border = "rounded",
         source = "always",
       },
-      update_in_insert = true,
+      update_in_insert = false,
     })
 
     local sign = function(opts)
