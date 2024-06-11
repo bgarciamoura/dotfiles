@@ -1,0 +1,14 @@
+# /Users/macbookairm1/.config/tmuxinator/blog.yml
+
+name: blog
+root: ~/Projects/dio-blog
+windows:
+  - editor:
+      panes:
+        - code:
+            - nvim
+
+  - terminal:
+      panes:
+        - running:
+            - ng serve

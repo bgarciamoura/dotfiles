@@ -8,71 +8,33 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 
-# GH Actions Template
-
-This repo aims to be my personal template to create new repositories with predefined workflows.
-
-The goal is keep this repo updated with new workflows when there's a need of that.
-
+# DOTFILES
+WORKING ON!!!!
 
 <details>
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#current-flows">Current Flows</a>
-      <ul>
-        <a href="#auto-pr">Auto PR</a>
-        <ul>
-            <a href="#how-to-config">How to config</a>
-        </ul>
-      </ul>
+      <a href="#what-we-got">What We Got</a>
     </li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
-
-
-## Current Flows
+## What We Got
+I'm still working on my configs, but for now, i have those configs:
 
 ```
-~/.github/workflows/
+~/.config/
 │
-├── auto-generate-pr.yml            # This workflow, as the name said, aims to create a new PR for a commit made to a feature/* branch
+├── alacritty/
+├── nvim/
+├── oh-my-posh/
+├── tmuxinator/
+└── wezterm/
 ```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-### Auto PR
-
-The main goal of this workflow it's automate the PR's creation for personal repos. Stop creating PR's manually or commiting just to one branch, create as many branch do you want and use this workflow to auto send them to the main branch.
-
-*Advertising*<br>
-Do not use this workflow for teams.
-To do that you have to change the workflow removing the auto merge option.
-
-#### How to config
-
-The first thing you'll have to do is create a token to gh-actions access your repository:
-
-1. You have to enter in your github account, click on your photo on the right screen side and go to settings;
-2. Once there, in the left panel scroll down until you find the **Developer settings** and click it;
-3. In the new page, click on **Personal access tokens**, to expand the selection, and choose **Fine-grained tokens**;
-4. Generate a new token with access permissions to all your repositories and repositories permissions to **Read and Write**;
-5. Save this token in a safe place to use on your repositories;
-
-With the token in hands, follow to your desired repository and access the settings page of that repo.
-
-1. In the settings page, on the left panel, access the **Secrets and variables** section to expand the list, under Security options and click on **Actions**;
-2. On that page, you can create a new *Repository secret*, it will store the token that you had created in the previous step;
-3. Click on **New repository secret**, put the name as 'TOKEN', all caps, and paste the token on the *Secret* section, then save and you're ready to go;
-
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 ## Contributing
 
