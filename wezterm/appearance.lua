@@ -2,7 +2,7 @@ local wezterm = require 'wezterm'
 
 return {
     -- Configuração da aparência
-    font = wezterm.font("RobotoMono Nerd Font", {weight="Regular", stretch="Normal", style="Normal"}),
+    font = wezterm.font("RobotoMono Nerd Font", {weight="Medium", stretch="Normal", style="Normal"}),
     font_size = 14,
     color_scheme = "Ayu Dark (Gogh)",
   
