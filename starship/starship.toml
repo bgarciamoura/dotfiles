@@ -1,0 +1,287 @@
+add_newline = true
+
+format = """
+[┌─](bold #CF9FFF)\
+\b  \
+$username[@](bold #CF9FFF)\
+$hostname [at](#fdfe02) \
+$directory\
+$git_branch\
+$git_status\
+$fill\
+$docker_context\
+$package\
+$c\
+$cmake\
+$dart\
+$deno\
+$dotnet\
+$elixir\
+$elm\
+$golang\
+$guix_shell\
+$java\
+$julia\
+$kotlin\
+$gradle\
+$lua\
+$nodejs\
+$perl\
+$php\
+$python\
+$ruby\
+$rust\
+$swift\
+$terraform\
+$conda\
+$meson\
+$spack\
+$memory_usage\
+$aws\
+$gcloud\
+$openstack\
+$azure\
+$nats\
+$git_commit\
+$git_state\
+$git_metrics\
+\b $time
+[└──$character](bold #CF9FFF)
+"""
+
+
+[username]
+disabled = false
+style_root = "bold #CCCCFF"
+style_user = "bold #CCCCFF"
+format = "[$user]($style)"
+show_always = true
+
+[hostname]
+disabled = false
+style = "blue"
+format = "[$hostname]($style)"
+ssh_only = false
+ssh_symbol = " "
+
+[character]
+success_symbol = ""
+error_symbol = "[](bold red)"
+
+[fill]
+symbol = ' '
+style = 'bold green'
+
+[cmd_duration]
+disabled = false
+
+[time]
+disabled = false
+use_12hr = false
+style = "blue"
+format = "[$time]($style)"
+time_format = "%H:%M:%S"
+
+[localip]
+ssh_only = false
+disabled = false
+format = "on [$localipv4](bold red)"
+
+[aws]
+symbol = "  "
+
+[buf]
+symbol = " "
+
+[c]
+symbol = " "
+format = "$symbol $version "
+
+[conda]
+symbol = " "
+format = "$symbol $version "
+
+[crystal]
+symbol = " "
+format = "$symbol $version "
+
+[dart]
+symbol = " "
+format = "$symbol $version "
+
+[directory]
+style = "bold #00aaff"
+truncation_length = 1
+truncation_symbol = "⋯/"
+read_only = " 󰌾"
+
+[docker_context]
+symbol = " "
+format = "$symbol $version "
+
+[elixir]
+symbol = " "
+format = "$symbol $version "
+
+[elm]
+symbol = " "
+format = "$symbol $version "
+
+[fennel]
+symbol = " "
+format = "$symbol $version "
+
+[fossil_branch]
+symbol = " "
+
+[git_branch]
+symbol = " "
+
+[golang]
+symbol = " "
+format = "$symbol $version "
+
+[guix_shell]
+symbol = " "
+format = "$symbol $version "
+
+[haskell]
+symbol = " "
+format = "$symbol $version "
+
+[haxe]
+symbol = " "
+format = "$symbol $version "
+
+[hg_branch]
+symbol = " "
+
+
+[java]
+symbol = " "
+format = "$symbol $version "
+
+[julia]
+symbol = " "
+format = "$symbol $version "
+
+[kotlin]
+symbol = " "
+format = "$symbol $version "
+
+[lua]
+symbol = " "
+style = "blue"
+format = "[$symbol($version )]($style)"
+
+[memory_usage]
+symbol = "󰍛 "
+format = "$symbol $version "
+
+[meson]
+symbol = "󰔷 "
+format = "$symbol $version "
+
+[nim]
+symbol = "󰆥 "
+format = "$symbol $version "
+
+[nix_shell]
+symbol = " "
+format = "$symbol $version "
+
+[nodejs]
+symbol = " "
+format = "$symbol $version "
+
+[ocaml]
+symbol = " "
+format = "$symbol $version "
+
+[os.symbols]
+Alpaquita = " "
+Alpine = " "
+AlmaLinux = " "
+Amazon = " "
+Android = " "
+Arch = " "
+Artix = " "
+CentOS = " "
+Debian = " "
+DragonFly = " "
+Emscripten = " "
+EndeavourOS = " "
+Fedora = " "
+FreeBSD = " "
+Garuda = "󰛓 "
+Gentoo = " "
+HardenedBSD = "󰞌 "
+Illumos = "󰈸 "
+Kali = " "
+Linux = " "
+Mabox = " "
+Macos = " "
+Manjaro = " "
+Mariner = " "
+MidnightBSD = " "
+Mint = " "
+NetBSD = " "
+NixOS = " "
+OpenBSD = "󰈺 "
+openSUSE = " "
+OracleLinux = "󰌷 "
+Pop = " "
+Raspbian = " "
+Redhat = " "
+RedHatEnterprise = " "
+RockyLinux = " "
+Redox = "󰀘 "
+Solus = "󰠳 "
+SUSE = " "
+Ubuntu = " "
+Unknown = " "
+Void = " "
+Windows = "󰍲 "
+
+[package]
+symbol = "󰏗 "
+format = "$symbol $version "
+
+[perl]
+symbol = " "
+format = "$symbol $version "
+
+[php]
+symbol = " "
+format = "$symbol $version "
+
+[pijul_channel]
+symbol = " "
+
+[python]
+symbol = " "
+format = "$symbol $version "
+
+[rlang]
+symbol = "󰟔 "
+format = "$symbol $version "
+
+[ruby]
+symbol = " "
+format = "$symbol $version "
+
+[rust]
+symbol = " "
+format = "$symbol $version "
+
+[scala]
+symbol = " "
+format = "$symbol $version "
+
+[swift]
+symbol = " "
+format = "$symbol $version "
+
+[zig]
+symbol = " "
+format = "$symbol $version "
