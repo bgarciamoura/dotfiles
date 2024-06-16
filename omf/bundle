@@ -1,4 +1,8 @@
+package autovenv
+package battery
+package brew
 package config
+package fonts
 package spark
 package wd
 package weather
