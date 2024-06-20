@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "coc-json": ">=1.9.2",
+    "coc-tsserver": ">=2.2.0",
+    "coc-css": ">=2.1.0",
+    "coc-html": ">=1.8.0",
+    "coc-html-css-support": ">=0.5.3",
+    "coc-markdownlint": ">=1.34.0",
+    "coc-prettier": ">=9.3.2",
+    "@yaegassy/coc-nginx": ">=0.4.1",
+    "coc-htmlhint": ">=0.6.1",
+    "coc-markmap": ">=0.7.2",
+    "coc-lua": ">=2.0.6"
+  }
+}
