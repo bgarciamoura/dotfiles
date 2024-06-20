@@ -10,6 +10,8 @@
     "@yaegassy/coc-nginx": ">=0.4.1",
     "coc-htmlhint": ">=0.6.1",
     "coc-markmap": ">=0.7.2",
-    "coc-lua": ">=2.0.6"
+    "coc-lua": ">=2.0.6",
+    "coc-angular": ">=17.0.2",
+    "coc-cssmodules": ">=1.1.1"
   }
 }
