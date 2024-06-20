@@ -1,5 +1,7 @@
 .DS_*
 **/.git
 **/.github
-coc/extensions
+coc/extensions/coc-json-data
+coc/extensions/coc-lua-data
+**/node_modules
 
