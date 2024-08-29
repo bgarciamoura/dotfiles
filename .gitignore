@@ -4,4 +4,10 @@
 coc/extensions/coc-json-data
 coc/extensions/coc-lua-data
 **/node_modules
+nvim.bak/
+
+Autodesk/
+Voxeldance/
+
+zmk-config/
 

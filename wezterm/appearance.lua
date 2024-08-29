@@ -36,7 +36,7 @@ return {
   -- Configuração da aparência
   font = wezterm.font("RobotoMono Nerd Font", { weight = "Medium", stretch = "Normal", style = "Normal" }),
   font_size = 14,
-  -- color_scheme = "Ayu Dark (Gogh)",
+  color_scheme = "Catppuccin Mocha",
   window_padding = {
     left = 1,
     right = 1,
@@ -45,7 +45,7 @@ return {
   },
 
   -- Transparência
-  window_background_opacity = 0.9,
+  window_background_opacity = 0.95,
   text_background_opacity = 0.9,
 
   -- Configuração da barra superior
@@ -53,7 +53,7 @@ return {
   tab_bar_at_bottom = true,
   hide_tab_bar_if_only_one_tab = true,
   tab_max_width = 20,
-  colors = neofusion_theme,
+  -- colors = neofusion_theme,
   -- colors = {
   --     tab_bar = {
   --         background = "#282c34", -- Cor de fundo da barra de guias
