@@ -12,6 +12,7 @@ end
 
 set -x PATH /usr/local/bin $PATH
 set -x PATH ~/.local/share/mise/shims $PATH
+set -x PATH ~/.docker/bin/ $PATH
 set -x STARSHIP_CONFIG ~/.config/starship/starship.toml
 
 starship init fish | source
@@ -24,3 +25,4 @@ if not string match -q -- $PNPM_HOME $PATH
   set -gx PATH "$PNPM_HOME" $PATH
 end
 # pnpm end
+

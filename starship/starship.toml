@@ -1,5 +1,11 @@
 add_newline = true
 
+# Timeout for commands executed by starship (in milliseconds).
+command_timeout = 3600000
+
+# Timeout for starship to scan files (in milliseconds).
+scan_timeout = 500
+
 format = """
 [┌─](bold #CF9FFF)\
 \b  \
@@ -285,3 +291,4 @@ format = "$symbol $version "
 [zig]
 symbol = " "
 format = "$symbol $version "
+

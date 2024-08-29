@@ -12,6 +12,20 @@
     "coc-markmap": ">=0.7.2",
     "coc-lua": ">=2.0.6",
     "coc-angular": ">=17.0.2",
-    "coc-cssmodules": ">=1.1.1"
+    "coc-cssmodules": ">=1.1.1",
+    "coc-emmet": ">=1.1.6",
+    "coc-git": ">=2.7.0",
+    "coc-eslint": ">=1.7.0",
+    "coc-prisma": ">=0.11.0",
+    "coc-snippets": ">=3.1.10",
+    "coc-sql": ">=0.11.0",
+    "coc-svg": ">=0.0.13",
+    "coc-stylelintplus": ">=1.5.0",
+    "coc-swagger": ">=0.0.4",
+    "coc-xml": ">=1.14.1",
+    "coc-yaml": ">=1.9.0",
+    "coc-stylelint": ">=1.2.0",
+    "@yaegassy/coc-tailwindcss3": ">=0.5.7",
+    "coc-omnisharp": ">=0.0.28"
   }
 }
