@@ -13,16 +13,10 @@ end
 set -x PATH /usr/local/bin $PATH
 set -x PATH ~/.local/share/mise/shims $PATH
 set -x PATH ~/.docker/bin/ $PATH
+set -x PATH ~/.local/share/mise/installs/node/20.17.0/bin $PATH
 set -x STARSHIP_CONFIG ~/.config/starship/starship.toml
 
 starship init fish | source
 enable_transience
-/opt/homebrew/bin/mise activate fish | source
-
-# pnpm
-set -gx PNPM_HOME "/Users/bgmoura/Library/pnpm"
-if not string match -q -- $PNPM_HOME $PATH
-  set -gx PATH "$PNPM_HOME" $PATH
-end
-# pnpm end
+/usr/bin/mise activate fish | source
 

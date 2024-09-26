@@ -1,85 +1,15 @@
 {
   "coc-json|global": {
     "json-schema-cache": {
-      "http://json.schemastore.org/prettierrc": {
-        "etag": "\"079e10ba4ada1:0\"",
-        "fileName": "b2ed7a7b6c79e58baf94e4ce160282de.schema.json",
-        "updateTime": 1724434585208
-      },
-      "https://json.schemastore.org/package.json": {
-        "etag": "\"807a7b1d2ebcda1:0\"",
-        "fileName": "473f72b44c2905902dfbcc770aab7f7a.schema.json",
-        "updateTime": 1724434585647
-      },
-      "https://json.schemastore.org/eslintrc.json": {
-        "etag": "\"805385dd39b8da1:0\"",
-        "fileName": "c5064f140d4cfdbf4d6fbe68f68abbb1.schema.json",
-        "updateTime": 1724434586532
-      },
-      "https://json.schemastore.org/stylelintrc.json": {
-        "etag": "\"802db6e3f81da1:0\"",
-        "fileName": "000bfbdd14d2fb8ec5b0d59bec32ef98.schema.json",
-        "updateTime": 1724434586548
-      },
       "https://json.schemastore.org/prettierrc.json": {
         "etag": "\"079e10ba4ada1:0\"",
         "fileName": "ea5ab10330a3ab77dfd6d00a735b0925.schema.json",
-        "updateTime": 1724434586449
+        "updateTime": 1727381564411
       },
-      "https://json.schemastore.org/semantic-release.json": {
-        "etag": "\"09e8ecc624ada1:0\"",
-        "fileName": "fbc95702ba6eddb3e2de4f52e31ca82a.schema.json",
-        "updateTime": 1724434586474
-      },
-      "https://json.schemastore.org/jscpd.json": {
-        "etag": "\"09e8ecc624ada1:0\"",
-        "fileName": "22bfc1ab1ff56aae62322f6ce45dab5a.schema.json",
-        "updateTime": 1724434586446
-      },
-      "https://json.schemastore.org/ava.json": {
-        "etag": "\"0d33f13698ada1:0\"",
-        "fileName": "635f57185b22bce9d3a56c68f5da4ad7.schema.json",
-        "updateTime": 1724434586531
-      },
-      "https://json.schemastore.org/partial-eslint-plugins.json": {
-        "etag": "\"01dc33f55f4da1:0\"",
-        "fileName": "fc7bb6e733b774ce47be6006f0b75b87.schema.json",
-        "updateTime": 1724434587521
-      },
-      "https://json.schemastore.org/tsconfig.json": {
-        "etag": "\"80fe99c3a8dfda1:0\"",
-        "fileName": "a28507e42e8bfd5fba830538461d5db3.schema.json",
-        "updateTime": 1722992422188
-      },
-      "https://json.schemastore.org/babelrc.json": {
-        "etag": "\"8016fd5f60d0d91:0\"",
-        "fileName": "ce32cad38c30a5a623bc5807f2a9141d.schema.json",
-        "updateTime": 1719327357812
-      },
-      "https://turbo.build/schema.json": {
-        "etag": "W/\"32fad344612cf541a71972a5c85a55e5\"",
-        "fileName": "0226f33021d03cf4989a441e813553f2.schema.json",
-        "updateTime": 1719784363815
-      },
-      "https://turborepo.org/schema.json": {
-        "etag": "W/\"32fad344612cf541a71972a5c85a55e5\"",
-        "fileName": "bce6580503589fc7b80613688a8aa5bf.schema.json",
-        "updateTime": 1719786268711
-      },
-      "https://json.schemastore.org/expo-46.0.0.json": {
-        "etag": "\"0ad956060d0d91:0\"",
-        "fileName": "c6f0c6e64f3a29030e0783f87efd07b2.schema.json",
-        "updateTime": 1722992411400
-      },
-      "https://raw.githubusercontent.com/Cog-Creators/Red-DiscordBot/V3/develop/schema/red_cog.schema.json": {
-        "etag": "W/\"61e4cb454720a4ec5502b197dcaca362123887eb468d1392d5edfe494796ae0c\"",
-        "fileName": "4e55fe2ab4d4ce86cd737aabaed03f41.schema.json",
-        "updateTime": 1723744355166
-      },
-      "https://raw.githubusercontent.com/Cog-Creators/Red-DiscordBot/V3/develop/schema/red_cog_repo.schema.json": {
-        "etag": "W/\"f4de4b44fb84aa56751db235a496ea42acafad251db7983173e6498a05a0e2be\"",
-        "fileName": "823c6a65b157db586e4499bd909645a6.schema.json",
-        "updateTime": 1723744355170
+      "http://json.schemastore.org/prettierrc": {
+        "etag": "\"079e10ba4ada1:0\"",
+        "fileName": "b2ed7a7b6c79e58baf94e4ce160282de.schema.json",
+        "updateTime": 1727383218613
       }
     }
   }
