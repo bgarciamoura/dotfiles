@@ -35,7 +35,7 @@ local neofusion_theme = {
 return {
   -- Configuração da aparência
   font = wezterm.font("RobotoMono Nerd Font", { weight = "Medium", stretch = "Normal", style = "Normal" }),
-  font_size = 14,
+  font_size = 10,
   color_scheme = "Catppuccin Mocha",
   window_padding = {
     left = 1,

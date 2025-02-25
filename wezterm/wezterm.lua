@@ -24,4 +24,6 @@ for k, v in pairs(behavior) do
   config[k] = v
 end
 
+config.default_domain = 'WSL:Ubuntu-24.04'
+
 return config
