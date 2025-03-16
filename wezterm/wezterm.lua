@@ -32,9 +32,16 @@ for k, v in pairs(behavior) do
 	config[k] = v
 end
 
-for k, v in pairs(domains) do
-	config[k] = v
+-- Handle domains separately to avoid type mismatches
+if domains.wsl_domains then
+	config.wsl_domains = domains.wsl_domains
 end
+
+if domains.ssh_domains then
+	config.ssh_domains = domains.ssh_domains
+end
+
+-- Any other domain types can be added here
 
 -- Set keys separately to avoid overriding
 config.keys = keys

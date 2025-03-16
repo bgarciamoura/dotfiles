@@ -3,7 +3,7 @@
 
 # Configurações globais
 add_newline = true
-command_timeout = 3600000  # Timeout aumentado para comandos (1 hora)
+command_timeout = 3600  # Timeout aumentado para comandos (1 hora)
 scan_timeout = 500
 
 # Layout principal do prompt
@@ -92,11 +92,7 @@ disabled = false
 format = "on [$localipv4](bold red)"
 
 # Configurações Git
-[git_branch]
-symbol = " "
-style = "bold purple"
-format = "[$symbol$branch]($style) "
-
+# 1. Otimize o módulo git_status para evitar operações custosas
 [git_status]
 style = "bold yellow"
 format = '[$all_status$ahead_behind]($style) '
@@ -110,6 +106,34 @@ modified = "!${count}"
 staged = "+${count}"
 renamed = "»${count}"
 deleted = "✘${count}"
+# Adicione estas novas opções:
+disabled = false
+ignore_submodules = true  # Ignora submódulos para melhor performance
+windows_starship = true   # Otimiza para Windows/WSL (ajuda mesmo no macOS)
+
+# 2. Adicione o módulo git_metrics para melhor performance com cache
+[git_metrics]
+disabled = false  # Habilita o módulo git_metrics
+added_style = "bold green"
+deleted_style = "bold red"
+only_nonzero_diffs = true  # Só mostra quando há diferenças
+format = "([+$added]($added_style) [-$deleted]($deleted_style) )"
+
+# 3. Otimize o módulo git_branch para reduzir chamadas ao git
+[git_branch]
+symbol = " "
+style = "bold purple"
+format = "[$symbol$branch]($style) "
+# Adicione estas novas opções:
+always_show_remote = false  # Evita consultas desnecessárias ao remote
+truncation_length = 20      # Limita o tamanho do nome da branch
+only_attached = true        # Só mostra quando anexado a uma branch
+
+# 4. Configure o módulo git_state para ser mais leve
+[git_state]
+format = '[\($state( $progress_current/$progress_total)\)]($style) '
+cherry_pick = "🍒 PICKING"
+disabled = false
 
 # Linguagens e ferramentas - cores alinhadas
 [docker_context]

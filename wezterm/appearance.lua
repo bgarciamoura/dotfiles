@@ -46,13 +46,17 @@ local window_frame = {
 
 -- Appearance configuration
 return {
+	-- Initial window size
+	initial_rows = 50,
+	initial_cols = 140,
+
 	-- Font settings
 	font = wezterm.font_with_fallback({
 		{ family = "RobotoMono Nerd Font", weight = "Medium" },
 		{ family = "JetBrainsMono Nerd Font", weight = "Medium" },
 		{ family = "Symbols Nerd Font Mono", scale = 0.9 },
 	}),
-	font_size = 11,
+	font_size = 12,
 	line_height = 1.1,
 
 	-- Window appearance

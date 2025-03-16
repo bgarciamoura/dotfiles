@@ -76,9 +76,9 @@ return {
 
 	-- URL handling
 	hyperlink_rules = {
-		-- Standard URLs
+		-- Standard URLs (simplified version with safer regex)
 		{
-			regex = "\\b\\w+://[\\w.-]+(?::\\d+)?(?:/[\\w._~:/?#[\\]@!$&'()*+,;=]*)?",
+			regex = "\\b\\w+://[\\w.-]+(?::\\d+)?(?:/[\\w.~:/?#@!$&'()*+,;=-]*)?",
 			format = "$0",
 		},
 		-- File paths
@@ -88,7 +88,7 @@ return {
 		},
 		-- GitHub repo references
 		{
-			regex = [[\b(?:https?://)?(?:www\.)?github\.com/([a-zA-Z0-9\-]+)/([a-zA-Z0-9\-\.]+)\b]],
+			regex = "\\b(?:https?://)?(?:www\\.)?github\\.com/([a-zA-Z0-9\\-]+)/([a-zA-Z0-9\\-\\.]+)\\b",
 			format = "https://github.com/$1/$2",
 		},
 	},

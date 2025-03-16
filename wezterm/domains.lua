@@ -6,11 +6,12 @@ local is_mac = wezterm.target_triple:find("darwin") ~= nil
 local is_linux = not is_windows and not is_mac
 
 -- Configuration for different domains (environments)
-local domains = {}
+local wsl_domains = {}
+local ssh_domains = {}
 
 -- WSL domain setup for Windows
 if is_windows then
-	table.insert(domains, {
+	table.insert(wsl_domains, {
 		name = "WSL:Ubuntu",
 		distribution = "Ubuntu",
 		default_cwd = "~",
@@ -18,7 +19,7 @@ if is_windows then
 	})
 
 	-- Add PowerShell
-	table.insert(domains, {
+	table.insert(wsl_domains, {
 		name = "PowerShell",
 		default_prog = { "powershell.exe", "-NoLogo" },
 		default_cwd = "C:\\Users\\$USER\\Documents",
@@ -26,27 +27,29 @@ if is_windows then
 end
 
 -- SSH domains for quick connections
-table.insert(domains, {
-	name = "SSH:MyServer",
-	remote_address = "myserver.example.com",
-	username = "myuser",
-	ssh_option = {
-		identityfile = "~/.ssh/id_rsa",
-	},
-})
+-- Only add if you have actual servers to connect to
+-- table.insert(ssh_domains, {
+--   name = "MyServer",
+--   remote_address = "myserver.example.com",
+--   username = "myuser",
+--   ssh_option = {
+--     identityfile = "~/.ssh/id_rsa"
+--   }
+-- })
 
--- macOS specific domains
+-- macOS specific domains (not SSH or WSL, just local domains)
+local default_domains = {}
 if is_mac then
-	table.insert(domains, {
+	table.insert(default_domains, {
 		name = "Dev Environment",
 		default_cwd = "~/Development",
 		default_prog = { "zsh", "-l" },
 	})
 end
 
--- Linux specific domains
+-- Linux specific domains (not SSH or WSL, just local domains)
 if is_linux then
-	table.insert(domains, {
+	table.insert(default_domains, {
 		name = "Docker Helper",
 		default_cwd = "~/docker",
 		default_prog = { "zsh", "-l" },
@@ -54,6 +57,8 @@ if is_linux then
 end
 
 return {
-	wsl_domains = domains,
-	ssh_domains = domains,
+	wsl_domains = wsl_domains,
+	ssh_domains = ssh_domains,
+	-- You can add other domain types here if needed
+	default_domains = default_domains,
 }
