@@ -151,4 +151,6 @@ zstyle ':completion:*:corrections' format '%F{green}%B-- %d (erros: %e) --%b%f'
 
 # ===[ Prompts e temas ]=== #
 # Starship - prompt multi-shell customizável
+export STARSHIP_CONFIG=~/.config/starship/starship.toml starship prompt
 eval "$(starship init zsh)"
+

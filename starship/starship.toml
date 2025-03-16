@@ -1,383 +1,203 @@
-# Configuração do Starship personalizada
-# Com base na configuração existente e melhorias de design
-
-# Configurações globais
-add_newline = true
-command_timeout = 3600  # Timeout aumentado para comandos (1 hora)
-scan_timeout = 500
-
-# Layout principal do prompt
+# Configuração Starship com estética Cyberpunk e efeito diagonal
 format = """
-[┌─](bold #CF9FFF)\
-\b  \
-$username[@](bold #CF9FFF)\
-$hostname [in](#fdfe02) \
+[](#0D0221)\
+$os\
+[](bg:#340042 fg:#0D0221)\
+$username\
+[](bg:#3B1F54 fg:#340042)\
 $directory\
+[](fg:#3B1F54 bg:none)\
+$fill\
+[](bg:none fg:#9331FF)\
 $git_branch\
 $git_status\
-$fill\
-$docker_context\
-$package\
+[](fg:#9331FF bg:#00F6FF)\
 $nodejs\
 $python\
 $rust\
 $golang\
-$java\
-$lua\
-$php\
-$kotlin\
-$c\
-$dart\
-$memory_usage\
-$aws\
-$gcloud\
-$azure\
-\b $time
-[└─$character](bold #CF9FFF)
+[](fg:#00F6FF bg:#FF0097)\
+$time\
+[](fg:#FF0097 bg:none)\
+$line_break\
+$character
 """
+
+# Módulo fill para criar espaço entre as seções esquerda e direita
+[fill]
+symbol = " "
+style = "bg:none"
+
+# Configurações gerais
+add_newline = true
+command_timeout = 5000
 
 # Caractere de prompt
 [character]
-success_symbol = "[❯](bold #00aaff)"
-error_symbol = "[✗](bold red)"
+success_symbol = "[↯](bold #36F9F6)"
+error_symbol = "[✗](bold #FF073A)"
+vimcmd_symbol = "[V](bold #64D7D2)"
 
-# Configurações do nome de usuário
+# Sistema operacional
+[os]
+format = "[$symbol](bg:#0D0221 fg:#F706CF) "
+disabled = false
+
+[os.symbols]
+Windows = "󰍲"
+Macos = "󰀵"
+Linux = "󰌽"
+Ubuntu = "󰕈"
+Debian = "󰣚"
+Raspbian = "󰐿"
+Mint = "󰣭"
+Fedora = "󰣛"
+CentOS = "󰣨"
+Alpine = "󰣿"
+Arch = "󰣇"
+Amazon = "󰣴"
+
+# Nome de usuário 
 [username]
+style_user = "bg:#340042 fg:#FF00F5 bold"
+style_root = "bg:#340042 fg:#FF073A bold"
+format = '[$user ]($style)'
 disabled = false
-style_root = "bold red"
-style_user = "bold #CCCCFF"
-format = "[$user]($style)"
 show_always = true
-
-# Configurações do hostname
-[hostname]
-disabled = false
-style = "bold #00aaff"
-format = "[$hostname]($style)"
-ssh_only = false
-ssh_symbol = " "
-
-# Preenchimento (fill) para espaçar à direita
-[fill]
-symbol = " "
-style = "bold #313131"
 
 # Diretório atual
 [directory]
-style = "bold #00aaff"
+style = "bg:#3B1F54 fg:#C7F8FF bold"
+format = "[ $path ]($style)"
 truncation_length = 3
-truncation_symbol = "⋯/"
-read_only = " 󰌾"
-format = "[$path]($style)[$read_only]($read_only_style) "
+truncation_symbol = "…/"
+read_only = " "
+read_only_style = "bg:#3B1F54 fg:#FF073A"
 
-# Tempo de execução do comando
-[cmd_duration]
-disabled = false
-min_time = 500
-format = "[$duration]($style) "
-style = "yellow"
+# Branch Git
+[git_branch]
+symbol = "󱓞 "
+style = "bg:#9331FF fg:#000000 bold"
+format = '[ $symbol$branch ]($style)'
+truncation_length = 20
+truncation_symbol = "…"
 
-# Hora atual
+# Status Git
+[git_status]
+style = "bg:#9331FF fg:#121212"
+format = '[$all_status$ahead_behind ]($style)'
+conflicted = "⚠️ "
+ahead = "⟫${count} "
+behind = "⟪${count} "
+diverged = "⥮${ahead_count}⥯${behind_count} "
+untracked = "◌${count} "
+stashed = "✱${count} "
+modified = "✶${count} "
+staged = "✓${count} "
+renamed = "⟿${count} "
+deleted = "✘${count} "
+
+# Hora
 [time]
 disabled = false
-use_12hr = false
-style = "bold #CF9FFF"
-format = "[$time]($style)"
-time_format = "%H:%M:%S"
+time_format = "%H:%M"
+style = "bg:#FF0097 fg:#000000 bold"
+format = '[ 󱑍 $time ]($style)'
 
-# IP local
-[localip]
-ssh_only = false
-disabled = false
-format = "on [$localipv4](bold red)"
-
-# Configurações Git
-# 1. Otimize o módulo git_status para evitar operações custosas
-[git_status]
-style = "bold yellow"
-format = '[$all_status$ahead_behind]($style) '
-conflicted = "="
-ahead = "⇡${count}"
-behind = "⇣${count}"
-diverged = "⇕⇡${ahead_count}⇣${behind_count}"
-untracked = false
-stashed = "*"
-modified = "!${count}"
-staged = "+${count}"
-renamed = "»${count}"
-deleted = "✘${count}"
-# Adicione estas novas opções:
-disabled = false
-ignore_submodules = true  # Ignora submódulos para melhor performance
-windows_starship = true   # Otimiza para Windows/WSL (ajuda mesmo no macOS)
-
-# 2. Adicione o módulo git_metrics para melhor performance com cache
-[git_metrics]
-disabled = false  # Habilita o módulo git_metrics
-added_style = "bold green"
-deleted_style = "bold red"
-only_nonzero_diffs = true  # Só mostra quando há diferenças
-format = "([+$added]($added_style) [-$deleted]($deleted_style) )"
-
-# 3. Otimize o módulo git_branch para reduzir chamadas ao git
-[git_branch]
-symbol = " "
-style = "bold purple"
-format = "[$symbol$branch]($style) "
-# Adicione estas novas opções:
-always_show_remote = false  # Evita consultas desnecessárias ao remote
-truncation_length = 20      # Limita o tamanho do nome da branch
-only_attached = true        # Só mostra quando anexado a uma branch
-
-# 4. Configure o módulo git_state para ser mais leve
-[git_state]
-format = '[\($state( $progress_current/$progress_total)\)]($style) '
-cherry_pick = "🍒 PICKING"
-disabled = false
-
-# Linguagens e ferramentas - cores alinhadas
-[docker_context]
-symbol = " "
-style = "blue"
-format = "[$symbol$context]($style) "
-
+# Node.js
 [nodejs]
-symbol = " "
-style = "bold green"
-format = "[$symbol$version]($style) "
+symbol = "󰎙 "
+style = "bg:#00F6FF fg:#000000"
+format = '[ $symbol($version) ]($style)'
+detect_extensions = ["js", "jsx", "ts", "tsx", "mjs", "cjs"]
+detect_files = ["package.json", ".node-version", ".nvmrc"]
+detect_folders = ["node_modules"]
 
+# Python
 [python]
-symbol = " "
-style = "bold blue"
-format = "[$symbol$version]($style) "
+symbol = "󰌠 "
+style = "bg:#00F6FF fg:#000000"
+format = '[ $symbol($version) ]($style)'
+detect_extensions = ["py", "pyc", "pyd"]
+detect_files = ["requirements.txt", "pyproject.toml", "Pipfile", "__init__.py"]
+detect_folders = [".venv", "venv", ".env", "env"]
 
+# Rust
 [rust]
-symbol = " "
-style = "bold orange"
-format = "[$symbol$version]($style) "
+symbol = "󱘗 "
+style = "bg:#00F6FF fg:#000000"
+format = '[ $symbol($version) ]($style)'
+detect_extensions = ["rs"]
+detect_files = ["Cargo.toml"]
 
+# Go
 [golang]
-symbol = " "
-style = "bold cyan"
-format = "[$symbol$version]($style) "
+symbol = "󰟓 "
+style = "bg:#00F6FF fg:#000000"
+format = '[ $symbol($version) ]($style)'
+detect_extensions = ["go"]
+detect_files = ["go.mod", "go.sum", "go.work", "main.go"]
+detect_folders = ["Godeps"]
 
+# Java
 [java]
-symbol = " "
-style = "bold red"
-format = "[$symbol$version]($style) "
+symbol = "󰬷 "
+style = "bg:#00F6FF fg:#000000"
+format = '[ $symbol($version) ]($style)'
+detect_extensions = ["java", "class", "jar", "gradle", "clj", "cljc"]
+detect_files = ["pom.xml", "build.gradle", ".java-version"]
+detect_folders = [".java"]
 
+# Kotlin
 [kotlin]
-symbol = " "
-style = "bold purple"
-format = "[$symbol$version]($style) "
+symbol = "󱈙 "
+style = "bg:#00F6FF fg:#000000"
+format = '[ $symbol($version) ]($style)'
+detect_extensions = ["kt", "kts"]
+detect_files = ["build.gradle.kts"]
 
-[lua]
-symbol = " "
-style = "bold blue"
-format = "[$symbol$version]($style) "
-
+# PHP
 [php]
-symbol = " "
-style = "bold purple"
-format = "[$symbol$version]($style) "
+symbol = "󰌟 "
+style = "bg:#00F6FF fg:#000000"
+format = '[ $symbol($version) ]($style)'
+detect_extensions = ["php", "phps", "php.stub", "phtml"]
+detect_files = ["composer.json", ".php-version"]
+detect_folders = ["composer.json"]
 
-[c]
-symbol = " "
-style = "bold blue"
-format = "[$symbol$version]($style) "
-
-[cmake]
-symbol = "△ "
-format = "[$symbol$version]($style) "
-
-[dart]
-symbol = " "
-style = "bold blue"
-format = "[$symbol$version]($style) "
-
-[deno]
-symbol = "🦕 "
-format = "[$symbol$version]($style) "
-
-[dotnet]
-symbol = " "
-format = "[$symbol$version]($style) "
-
-[elixir]
-symbol = " "
-format = "[$symbol$version]($style) "
-
-[elm]
-symbol = " "
-format = "[$symbol$version]($style) "
-
-[guix_shell]
-symbol = " "
-format = "[$symbol$version]($style) "
-
-[julia]
-symbol = " "
-format = "[$symbol$version]($style) "
-
-[gradle]
-symbol = " "
-format = "[$symbol$version]($style) "
-
-[perl]
-symbol = " "
-format = "[$symbol$version]($style) "
-
+# Ruby
 [ruby]
-symbol = " "
-format = "[$symbol$version]($style) "
+symbol = "󰴭 "
+style = "bg:#00F6FF fg:#000000"
+format = '[ $symbol($version) ]($style)'
+detect_extensions = ["rb"]
+detect_files = ["Gemfile", ".ruby-version"]
+detect_folders = [".rbenv"]
 
-[swift]
-symbol = " "
-format = "[$symbol$version]($style) "
+# Docker context
+[docker_context]
+symbol = "󰡨 "
+style = "bg:#00F6FF fg:#000000"
+format = '[ $symbol$context ]($style)'
+only_with_files = true
+detect_files = ["docker-compose.yml", "docker-compose.yaml", "Dockerfile"]
+detect_folders = ["docker"]
 
-[terraform]
-symbol = "󱁢 "
-format = "[$symbol$version]($style) "
+# Bateria (ativo apenas quando baixa)
+[battery]
+full_symbol = "󰁹 "
+charging_symbol = "󰂄 "
+discharging_symbol = "󰂃 "
+format = "[$symbol$percentage]($style) "
+disabled = false
 
-# Cloud services
-[aws]
-symbol = "  "
-style = "bold yellow"
-format = "[$symbol$profile]($style) "
+[[battery.display]]
+threshold = 30
+style = "bold #FF0097"
 
-[gcloud]
-symbol = " "
-style = "bold blue"
-format = "[$symbol$project]($style) "
-
-[azure]
-symbol = "󰠅 "
-style = "bold blue"
-format = "[$symbol$subscription]($style) "
-
-[openstack]
-symbol = " "
-format = "[$symbol$cloud]($style) "
-
-# Ferramentas e ambientes
-[conda]
-symbol = " "
-format = "[$symbol$environment]($style) "
-
-[meson]
-symbol = "󰔷 "
-format = "[$symbol$project]($style) "
-
-[spack]
-symbol = "🅢 "
-format = "[$symbol$environment]($style) "
-
-[memory_usage]
-symbol = "󰍛 "
-style = "bold dimmed green"
-threshold = 75
-format = "[$symbol${ram}]($style) "
-
-# Sistemas operacionais
-[os.symbols]
-Alpaquita = " "
-Alpine = " "
-AlmaLinux = " "
-Amazon = " "
-Android = " "
-Arch = " "
-Artix = " "
-CentOS = " "
-Debian = " "
-DragonFly = " "
-Emscripten = " "
-EndeavourOS = " "
-Fedora = " "
-FreeBSD = " "
-Garuda = "󰛓 "
-Gentoo = " "
-HardenedBSD = "󰞌 "
-Illumos = "󰈸 "
-Kali = " "
-Linux = " "
-Mabox = " "
-Macos = " "
-Manjaro = " "
-Mariner = " "
-MidnightBSD = " "
-Mint = " "
-NetBSD = " "
-NixOS = " "
-OpenBSD = "󰈺 "
-openSUSE = " "
-OracleLinux = "󰌷 "
-Pop = " "
-Raspbian = " "
-Redhat = " "
-RedHatEnterprise = " "
-RockyLinux = " "
-Redox = "󰀘 "
-Solus = "󰠳 "
-SUSE = " "
-Ubuntu = " "
-Unknown = " "
-Void = " "
-Windows = "󰍲 "
-
-# Outros símbolos
-[package]
-symbol = "󰏗 "
-format = "[$symbol$version]($style) "
-
-[fossil_branch]
-symbol = " "
-
-[hg_branch]
-symbol = " "
-
-[haskell]
-symbol = " "
-format = "[$symbol$version]($style) "
-
-[haxe]
-symbol = " "
-format = "[$symbol$version]($style) "
-
-[nim]
-symbol = "󰆥 "
-format = "[$symbol$version]($style) "
-
-[nix_shell]
-symbol = " "
-format = "[$symbol$state]($style) "
-
-[ocaml]
-symbol = " "
-format = "[$symbol$version]($style) "
-
-[pijul_channel]
-symbol = " "
-
-[rlang]
-symbol = "󰟔 "
-format = "[$symbol$version]($style) "
-
-[scala]
-symbol = " "
-format = "[$symbol$version]($style) "
-
-[zig]
-symbol = " "
-format = "[$symbol$version]($style) "
-
-[fennel]
-symbol = " "
-format = "[$symbol$version]($style) "
-
-[buf]
-symbol = " "
-format = "[$symbol$version]($style) "
-
-[crystal]
-symbol = " "
-format = "[$symbol$version]($style) "
+# Comando anterior falhou?
+[status]
+format = "[$symbol$status]($style) "
+disabled = false
+symbol = "⚠️ "
+style = "bold #FF0097"
