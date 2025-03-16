@@ -1,38 +1,76 @@
 local wezterm = require("wezterm")
+local act = wezterm.action
 
 return {
-  -- Navegação entre abas
-  { key = "t",     mods = "CTRL",       action = wezterm.action.SpawnTab("DefaultDomain") },           -- Nova aba
-  { key = "w",     mods = "CTRL",       action = wezterm.action.CloseCurrentTab({ confirm = true }) }, -- Fechar aba atual
-  { key = "Tab",   mods = "CTRL",       action = wezterm.action.ActivateTabRelative(1) },              -- Próxima aba
-  { key = "Tab",   mods = "CTRL|SHIFT", action = wezterm.action.ActivateTabRelative(-1) },             -- Aba anterior
+	-- Tab navigation
+	{ key = "t", mods = "CTRL", action = act.SpawnTab("DefaultDomain") },
+	{ key = "w", mods = "CTRL", action = act.CloseCurrentTab({ confirm = true }) },
+	{ key = "Tab", mods = "CTRL", action = act.ActivateTabRelative(1) },
+	{ key = "Tab", mods = "CTRL|SHIFT", action = act.ActivateTabRelative(-1) },
+	{ key = "1", mods = "CTRL", action = act.ActivateTab(0) },
+	{ key = "2", mods = "CTRL", action = act.ActivateTab(1) },
+	{ key = "3", mods = "CTRL", action = act.ActivateTab(2) },
+	{ key = "4", mods = "CTRL", action = act.ActivateTab(3) },
+	{ key = "5", mods = "CTRL", action = act.ActivateTab(4) },
 
-  -- Divisão de painéis
-  { key = "H",     mods = "CTRL|SHIFT", action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) }, -- Split horizontal
-  { key = "V",     mods = "CTRL|SHIFT", action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },   -- Split vertical
+	-- Pane splitting
+	{ key = "\\", mods = "CTRL|SHIFT", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+	{ key = "-", mods = "CTRL|SHIFT", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
 
-  -- Movimentação entre painéis
-  { key = "h",     mods = "ALT",        action = wezterm.action.ActivatePaneDirection("Left") },
-  { key = "l",     mods = "ALT",        action = wezterm.action.ActivatePaneDirection("Right") },
-  { key = "k",     mods = "ALT",        action = wezterm.action.ActivatePaneDirection("Up") },
-  { key = "j",     mods = "ALT",        action = wezterm.action.ActivatePaneDirection("Down") },
+	-- Pane navigation
+	{ key = "h", mods = "ALT", action = act.ActivatePaneDirection("Left") },
+	{ key = "l", mods = "ALT", action = act.ActivatePaneDirection("Right") },
+	{ key = "k", mods = "ALT", action = act.ActivatePaneDirection("Up") },
+	{ key = "j", mods = "ALT", action = act.ActivatePaneDirection("Down") },
 
-  -- Fechar o painel atual
-  { key = "x",     mods = "CTRL|SHIFT", action = wezterm.action.CloseCurrentPane({ confirm = true }) },
+	-- Close current pane
+	{ key = "x", mods = "CTRL|SHIFT", action = act.CloseCurrentPane({ confirm = true }) },
 
-  -- Ajuste do tamanho dos painéis
-  { key = "H",     mods = "CTRL|ALT",   action = wezterm.action.AdjustPaneSize({ "Left", 5 }) },
-  { key = "L",     mods = "CTRL|ALT",   action = wezterm.action.AdjustPaneSize({ "Right", 5 }) },
-  { key = "K",     mods = "CTRL|ALT",   action = wezterm.action.AdjustPaneSize({ "Up", 5 }) },
-  { key = "J",     mods = "CTRL|ALT",   action = wezterm.action.AdjustPaneSize({ "Down", 5 }) },
+	-- Adjust pane size
+	{ key = "LeftArrow", mods = "CTRL|SHIFT", action = act.AdjustPaneSize({ "Left", 5 }) },
+	{ key = "RightArrow", mods = "CTRL|SHIFT", action = act.AdjustPaneSize({ "Right", 5 }) },
+	{ key = "UpArrow", mods = "CTRL|SHIFT", action = act.AdjustPaneSize({ "Up", 3 }) },
+	{ key = "DownArrow", mods = "CTRL|SHIFT", action = act.AdjustPaneSize({ "Down", 3 }) },
 
-  -- Alternar para tela cheia
-  { key = "Enter", mods = "ALT|SHIFT",  action = wezterm.action.ToggleFullScreen },
+	-- Toggle fullscreen
+	{ key = "F11", mods = "", action = act.ToggleFullScreen },
+	{ key = "Enter", mods = "ALT|SHIFT", action = act.ToggleFullScreen },
 
-  -- Recarregar configuração
-  { key = "r",     mods = "CTRL|SHIFT", action = wezterm.action.ReloadConfiguration },
+	-- Reload configuration
+	{ key = "r", mods = "CTRL|SHIFT", action = act.ReloadConfiguration },
 
-  -- Copy Paste
-  { key = "c",     mods = "CTRL",       action = wezterm.action({ CopyTo = "Clipboard" }) },
-  { key = "v",     mods = "CTRL",       action = wezterm.action({ PasteFrom = "Clipboard" }) },
+	-- Copy and paste
+	{ key = "c", mods = "CTRL|SHIFT", action = act.CopyTo("Clipboard") },
+	{ key = "v", mods = "CTRL|SHIFT", action = act.PasteFrom("Clipboard") },
+
+	-- Font size adjustments
+	{ key = "=", mods = "CTRL", action = act.IncreaseFontSize },
+	{ key = "-", mods = "CTRL", action = act.DecreaseFontSize },
+	{ key = "0", mods = "CTRL", action = act.ResetFontSize },
+
+	-- Search functionality
+	{ key = "f", mods = "CTRL|SHIFT", action = act.Search("CurrentSelectionOrEmptyString") },
+
+	-- Quick directory navigation
+	{ key = "h", mods = "CTRL|SHIFT|ALT", action = act.SendString("cd ~\r") },
+	{ key = "p", mods = "CTRL|SHIFT|ALT", action = act.SendString("cd ~/projects\r") },
+	{ key = "d", mods = "CTRL|SHIFT|ALT", action = act.SendString("cd ~/Downloads\r") },
+
+	-- Launch programs
+	{ key = "e", mods = "CTRL|SHIFT", action = act.SpawnCommandInNewTab({
+		args = { "nvim" },
+	}) },
+
+	-- Show debug overlay
+	{ key = "d", mods = "CTRL|SHIFT", action = act.ShowDebugOverlay },
+
+	-- Activate launcher menu
+	{ key = "Space", mods = "CTRL|SHIFT", action = act.ShowLauncher },
+
+	-- Quick select text (like URL)
+	{ key = "u", mods = "CTRL|SHIFT", action = act.QuickSelect },
+
+	-- Toggle between panes and tabs
+	{ key = "`", mods = "CTRL", action = act.PaneSelect },
+	{ key = "s", mods = "CTRL|SHIFT", action = act.PaneSelect({ mode = "SwapWithActive" }) },
 }

@@ -1,81 +1,111 @@
-local wezterm = require 'wezterm'
+local wezterm = require("wezterm")
+local act = wezterm.action
 
-local neofusion_theme = {
-  foreground = "#e0d9c7",
-  background = "#070f1c",
-  cursor_bg = "#e0d9c7",
-  cursor_border = "#e0d9c7",
-  cursor_fg = "#070f1c",
-  selection_bg = "#ea6847",
-  selection_fg = "#e0d9c7",
-  ansi = {
-    "#070f1c", -- Black (Host)
-    "#ea6847", -- Red (Syntax string)
-    "#ea6847", -- Green (Command)
-    "#5db2f8", -- Yellow (Command second)
-    "#6c6bfe", -- Blue (Path)
-    -- "#2f516c", -- Blue (Path)
-    "#d943a8", -- Magenta (Syntax var)
-    "#86dbf5", -- Cyan (Prompt)
-    "#e0d9c7", -- White
-  },
-  brights = {
-    "#2f516c", -- Bright Black
-    "#d943a8", -- Bright Red (Command error)
-    "#ea6847", -- Bright Green (Exec)
-    "#86dbf5", -- Bright Yellow
-    "#5db2f8", -- Bright Blue (Folder)
-    "#d943a8", -- Bright Magenta
-    "#ea6847", -- Bright Cyan
-    "#e0d9c7", -- Bright White
-  },
+-- Custom cyberpunk theme with soft neon colors
+local cyberpunk_theme = {
+	foreground = "#e0e0e0",
+	background = "#0d1117",
+	cursor_bg = "#ff2a6d",
+	cursor_border = "#ff2a6d",
+	cursor_fg = "#0d1117",
+	selection_bg = "#3d5566",
+	selection_fg = "#e0e0e0",
+
+	ansi = {
+		"#0d1117", -- Black
+		"#ff2a6d", -- Red
+		"#05d9e8", -- Green
+		"#f9c80e", -- Yellow
+		"#01c5c4", -- Blue
+		"#b967ff", -- Magenta
+		"#00feca", -- Cyan
+		"#e0e0e0", -- White
+	},
+
+	brights = {
+		"#2c333c", -- Bright Black
+		"#ff6e96", -- Bright Red
+		"#6bffe9", -- Bright Green
+		"#fcdc4d", -- Bright Yellow
+		"#67d7ee", -- Bright Blue
+		"#d6afff", -- Bright Magenta
+		"#64ffda", -- Bright Cyan
+		"#ffffff", -- Bright White
+	},
 }
 
+-- Tab styling is handled in events.lua via the format-tab-title event
 
+-- Configuration for window frame
+local window_frame = {
+	font = wezterm.font({ family = "RobotoMono Nerd Font", weight = "Bold" }),
+	font_size = 10.0,
+	active_titlebar_bg = "#0d1117",
+	inactive_titlebar_bg = "#0d1117",
+}
+
+-- Appearance configuration
 return {
-  -- Configuração da aparência
-  font = wezterm.font("RobotoMono Nerd Font", { weight = "Medium", stretch = "Normal", style = "Normal" }),
-  font_size = 10,
-  color_scheme = "Catppuccin Mocha",
-  window_padding = {
-    left = 1,
-    right = 1,
-    bottom = 0,
-    top = 0
-  },
+	-- Font settings
+	font = wezterm.font_with_fallback({
+		{ family = "RobotoMono Nerd Font", weight = "Medium" },
+		{ family = "JetBrainsMono Nerd Font", weight = "Medium" },
+		{ family = "Symbols Nerd Font Mono", scale = 0.9 },
+	}),
+	font_size = 11,
+	line_height = 1.1,
 
-  -- Transparência
-  window_background_opacity = 0.95,
-  text_background_opacity = 0.9,
+	-- Window appearance
+	window_padding = {
+		left = 5,
+		right = 5,
+		top = 5,
+		bottom = 5,
+	},
+	window_background_opacity = 0.95,
+	text_background_opacity = 1.0,
+	window_decorations = "RESIZE",
+	window_frame = window_frame,
 
-  -- Configuração da barra superior
-  enable_tab_bar = true,
-  tab_bar_at_bottom = true,
-  hide_tab_bar_if_only_one_tab = true,
-  tab_max_width = 20,
-  -- colors = neofusion_theme,
-  -- colors = {
-  --     tab_bar = {
-  --         background = "#282c34", -- Cor de fundo da barra de guias
-  --         active_tab = {
-  --             bg_color = "#61afef", -- Cor de fundo da guia ativa
-  --             fg_color = "#282c34", -- Cor do texto da guia ativa
-  --             intensity = "Normal", -- Intensidade do texto
-  --             italic = false, -- Texto em itálico
-  --         },
-  --         inactive_tab = {
-  --             bg_color = "#282c34", -- Cor de fundo da guia inativa
-  --             fg_color = "#abb2bf", -- Cor do texto da guia inativa
-  --             intensity = "Normal", -- Intensidade do texto
-  --             italic = false, -- Texto em itálico
-  --         },
-  --         inactive_tab_hover = {
-  --             bg_color = "#3e4452", -- Cor de fundo da guia inativa quando o mouse está sobre ela
-  --             fg_color = "#61afef", -- Cor do texto da guia inativa quando o mouse está sobre ela
-  --             intensity = "Normal", -- Intensidade do texto
-  --             italic = false, -- Texto em itálico
-  --         },
-  --     }
-  -- },
+	-- Colors and themes
+	color_scheme = "Catppuccin Mocha", -- Base theme
+	colors = cyberpunk_theme, -- Uncomment to use custom theme
 
+	-- Tab bar configuration
+	enable_tab_bar = true,
+	tab_bar_at_bottom = true,
+	use_fancy_tab_bar = false,
+	hide_tab_bar_if_only_one_tab = true,
+	tab_max_width = 25,
+	show_tab_index_in_tab_bar = true,
+	tab_bar_style = {
+		new_tab = wezterm.format({
+			{ Background = { Color = "#292e42" } },
+			{ Foreground = { Color = "#a9b1d6" } },
+			{ Text = " + " },
+		}),
+		new_tab_hover = wezterm.format({
+			{ Background = { Color = "#3b4261" } },
+			{ Foreground = { Color = "#7aa2f7" } },
+			{ Text = " + " },
+		}),
+	},
+
+	-- Tab format handled by the format-tab-title event in events.lua
+
+	-- Background effects
+	background = {
+		{
+			source = {
+				File = wezterm.config_dir .. "/background.jpg",
+			},
+			width = "100%",
+			height = "100%",
+			opacity = 0.07,
+		},
+	},
+
+	-- Cursor configuration
+	default_cursor_style = "BlinkingBlock",
+	cursor_thickness = 2,
 }
