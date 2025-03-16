@@ -46,7 +46,6 @@ zinit light-mode for \
 
 # ===[ Plugins de completions ]=== #
 zinit ice blockf
-zinit light zsh-users/zsh-completions
 autoload -Uz compinit
 compinit
 zinit cdreplay -q
@@ -55,13 +54,18 @@ zinit cdreplay -q
 # Esses plugins trazem funcionalidades do Fish para o Zsh
 
 # Syntax highlighting (cores para comandos válidos)
+zinit ice wait lucid
 zinit light zdharma-continuum/fast-syntax-highlighting
 
 # Sugestões baseadas no histórico como no Fish
+zinit ice wait lucid
 zinit light zsh-users/zsh-autosuggestions
 
 # Completions mostrando documentação como no Fish
+zinit ice wait lucid
 zinit light clarketm/zsh-completions
+
+
 
 # ===[ Ferramentas para desenvolvimento ]=== #
 # fzf - fuzzy finder para busca interativa
@@ -111,9 +115,7 @@ fi
 
 # ===[ Path e variáveis de ambiente ]=== #
 # Suporte a MISE (gerenciador de versões)
-if command -v mise >/dev/null 2>&1; then
-    eval "$(mise activate zsh)"
-fi
+eval "$(mise activate zsh)"
 
 # Node Version Manager (nvm) - se instalado
 export NVM_DIR="$HOME/.nvm"
@@ -149,8 +151,41 @@ zstyle ':completion:*:messages' format '%F{yellow}%d%f'
 zstyle ':completion:*:warnings' format '%F{red}-- sem correspondências --%f'
 zstyle ':completion:*:corrections' format '%F{green}%B-- %d (erros: %e) --%b%f'
 
+# Acelerar o sistema de completions
+zstyle ':completion:*' accept-exact '*(N)'
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.zsh/cache
+zstyle ':completion:*' use-cache yes
+zstyle ':completion:*' menu select
+
+# Limpar o .zcompdump apenas uma vez por dia
+autoload -Uz compinit
+for dump in ~/.zcompdump(N.mh+24); do
+  compinit
+done
+compinit -C
+
 # ===[ Prompts e temas ]=== #
 # Starship - prompt multi-shell customizável
 export STARSHIP_CONFIG=~/.config/starship/starship.toml starship prompt
 eval "$(starship init zsh)"
+
+# Acelerar o prompt do Git
+function git_prompt_info() {
+  ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+  echo "$ZSH_THEME_GIT_PROMPT_PREFIX${ref#refs/heads/}$ZSH_THEME_GIT_PROMPT_SUFFIX"
+}
+
+# Cache git status para não verificar constantemente
+function precmd() {
+  if [ -n "$ZLUA_SCRIPT" ]; then
+    (lua $ZLUA_SCRIPT --add "$(pwd)" &) > /dev/null 2>&1
+  fi
+}
+
+# Remova duplicatas do PATH (adicione ao .zshrc)
+typeset -U path
+
+# Desabilite compinit verificando todos os possíveis aliases
+unsetopt complete_aliases
 
