@@ -56,7 +56,7 @@ return {
 		{ family = "JetBrainsMono Nerd Font", weight = "Medium" },
 		{ family = "Symbols Nerd Font Mono", scale = 0.9 },
 	}),
-	font_size = 12,
+	font_size = 10,
 	line_height = 1.1,
 
 	-- Window appearance
@@ -68,7 +68,7 @@ return {
 	},
 	window_background_opacity = 0.95,
 	text_background_opacity = 1.0,
-	window_decorations = "RESIZE",
+	window_decorations = "TITLE | RESIZE",
 	window_frame = window_frame,
 
 	-- Colors and themes
