@@ -106,10 +106,4 @@ else
 	config.default_prog = { "/bin/bash", "-c", setup_zshenv_script }
 end
 
--- Add startup notification
-wezterm.on("gui-startup", function()
-	local tab, pane, window = wezterm.mux.spawn_window({})
-	window:toast_notification("Wezterm Started", "Terminal session ready", nil, 4000)
-end)
-
 return config
