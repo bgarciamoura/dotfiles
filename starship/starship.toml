@@ -23,14 +23,13 @@ $line_break\
 $character
 """
 
+# Configurações gerais
+command_timeout = 5000
+
 # Módulo fill para criar espaço entre as seções esquerda e direita
 [fill]
 symbol = " "
 style = "bg:none"
-
-# Configurações gerais
-add_newline = true
-command_timeout = 5000
 
 # Caractere de prompt
 [character]
