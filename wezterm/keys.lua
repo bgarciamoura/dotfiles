@@ -2,36 +2,6 @@ local wezterm = require("wezterm")
 local act = wezterm.action
 
 return {
-	-- Tab navigation
-	{ key = "t", mods = "CTRL", action = act.SpawnTab("DefaultDomain") },
-	{ key = "w", mods = "CTRL", action = act.CloseCurrentTab({ confirm = true }) },
-	{ key = "Tab", mods = "CTRL", action = act.ActivateTabRelative(1) },
-	{ key = "Tab", mods = "CTRL|SHIFT", action = act.ActivateTabRelative(-1) },
-	{ key = "1", mods = "CTRL", action = act.ActivateTab(0) },
-	{ key = "2", mods = "CTRL", action = act.ActivateTab(1) },
-	{ key = "3", mods = "CTRL", action = act.ActivateTab(2) },
-	{ key = "4", mods = "CTRL", action = act.ActivateTab(3) },
-	{ key = "5", mods = "CTRL", action = act.ActivateTab(4) },
-
-	-- Pane splitting
-	{ key = "\\", mods = "CTRL|SHIFT", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
-	{ key = "-", mods = "CTRL|SHIFT", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
-
-	-- Pane navigation
-	{ key = "h", mods = "ALT", action = act.ActivatePaneDirection("Left") },
-	{ key = "l", mods = "ALT", action = act.ActivatePaneDirection("Right") },
-	{ key = "k", mods = "ALT", action = act.ActivatePaneDirection("Up") },
-	{ key = "j", mods = "ALT", action = act.ActivatePaneDirection("Down") },
-
-	-- Close current pane
-	{ key = "x", mods = "CTRL|SHIFT", action = act.CloseCurrentPane({ confirm = true }) },
-
-	-- Adjust pane size
-	{ key = "LeftArrow", mods = "CTRL|SHIFT", action = act.AdjustPaneSize({ "Left", 5 }) },
-	{ key = "RightArrow", mods = "CTRL|SHIFT", action = act.AdjustPaneSize({ "Right", 5 }) },
-	{ key = "UpArrow", mods = "CTRL|SHIFT", action = act.AdjustPaneSize({ "Up", 3 }) },
-	{ key = "DownArrow", mods = "CTRL|SHIFT", action = act.AdjustPaneSize({ "Down", 3 }) },
-
 	-- Toggle fullscreen
 	{ key = "F11", mods = "", action = act.ToggleFullScreen },
 	{ key = "Enter", mods = "ALT|SHIFT", action = act.ToggleFullScreen },
