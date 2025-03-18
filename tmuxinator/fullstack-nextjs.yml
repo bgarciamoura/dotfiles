@@ -73,7 +73,7 @@ windows:
       # DevOps e deployment
       layout: even-horizontal
       panes:
-        - lazygit # Interface Git
+        - lazygit # Interface TUI para Git
         - # Terminal para deployment
           echo "Comandos de deployment:
           - yarn build (construir para produção)

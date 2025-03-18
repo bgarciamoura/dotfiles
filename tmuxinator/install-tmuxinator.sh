@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Script de instalação completa do Tmuxinator com templates
+# Versão corrigida para evitar erros de heredoc aninhado
 
 # Cores para melhor legibilidade
 RED='\033[0;31m'
@@ -58,7 +59,7 @@ check_dependencies() {
 
   # Verificar outros utilitários
   local missing_utils=()
-  for util in git mkdir chmod cat; do
+  for util in git mkdir chmod cat grep sed; do
     if ! command -v $util &>/dev/null; then
       missing_utils+=($util)
     fi
@@ -117,7 +118,15 @@ setup_shell_integration() {
   # Detectar shell
   local shell_rc=""
   if [[ "$SHELL" == *"zsh"* ]]; then
-    shell_rc="$HOME/.config/zsh/.zshrc"
+    shell_rc="$HOME/.zshrc"
+    # Verificar se ZDOTDIR está definido
+    if [ -f "$HOME/.zshenv" ] && grep -q "ZDOTDIR" "$HOME/.zshenv"; then
+      # Extrair o valor de ZDOTDIR
+      local zdotdir=$(grep -o 'ZDOTDIR=.*' "$HOME/.zshenv" | sed 's/ZDOTDIR=//' | sed 's/"//g' | sed "s/'//g" | sed 's/\$//' | envsubst)
+      if [ -n "$zdotdir" ] && [ -d "$zdotdir" ]; then
+        shell_rc="$zdotdir/.zshrc"
+      fi
+    fi
   elif [[ "$SHELL" == *"bash"* ]]; then
     shell_rc="$HOME/.bashrc"
   else
@@ -125,6 +134,8 @@ setup_shell_integration() {
     print_message "$YELLOW" "Adicionando configurações ao .bashrc como padrão."
     shell_rc="$HOME/.bashrc"
   fi
+
+  print_message "$BLUE" "Usando arquivo de configuração do shell: $shell_rc"
 
   # Adicionar alias se não existir
   if ! grep -q "alias mux=" "$shell_rc"; then
@@ -138,7 +149,7 @@ setup_shell_integration() {
     print_message "$GREEN" "✅ Aliases já configurados em $shell_rc"
   fi
 
-  # Adicionar ~/bin ao PATH se não existir
+  # Adicionar ~/.bin ao PATH se não existir
   mkdir -p "$HOME/.bin"
   if ! grep -q 'PATH="$HOME/.bin:$PATH"' "$shell_rc"; then
     echo 'export PATH="$HOME/.bin:$PATH"' >>"$shell_rc"
@@ -175,7 +186,7 @@ install_templates() {
   mkdir -p "$template_dir"
 
   # Web Frontend Template
-  cat >"$template_dir/web-frontend.yml" <<'EOF'
+  cat >"$template_dir/web-frontend.yml" <<'EOFWEBFRONTEND'
 # ~/.config/tmuxinator/web-frontend.yml
 # Template Tmuxinator para Desenvolvimento Web Frontend (React, Vue, Angular)
 
@@ -186,7 +197,8 @@ root: <%= @args[1] || "~/projects/#{@args[0]}" %>
 on_project_first_start: yarn install
 on_project_restart: yarn install
 on_project_stop: docker-compose down
-on_project_exit: echo "Projeto encerrado: <%= @args[0] %>"
+# Aspas simples externas para evitar problemas com o YAML
+on_project_exit: 'echo "Projeto encerrado: <%= @args[0] %>"'
 tmux_command: tmux -2
 
 # Layout otimizado para desenvolvimento web
@@ -225,11 +237,11 @@ windows:
       panes: 
         - yarn build:analyze # Analisador de bundle (ajuste conforme sua configuração)
         - htop # Monitor de recursos
-EOF
+EOFWEBFRONTEND
   print_message "$GREEN" "✅ Template web-frontend.yml instalado"
 
   # Mobile (React Native) Template
-  cat >"$template_dir/mobile-react-native.yml" <<'EOF'
+  cat >"$template_dir/mobile-react-native.yml" <<'EOFMOBILE'
 # ~/.config/tmuxinator/mobile-react-native.yml
 # Template Tmuxinator para Desenvolvimento Mobile com React Native
 
@@ -290,11 +302,11 @@ windows:
       panes:
         - lazygit # Interface TUI para Git
         - # Terminal para revisar mudanças
-EOF
+EOFMOBILE
   print_message "$GREEN" "✅ Template mobile-react-native.yml instalado"
 
   # Backend (Node.js) Template
-  cat >"$template_dir/backend-nodejs.yml" <<'EOF'
+  cat >"$template_dir/backend-nodejs.yml" <<'EOFBACKEND'
 # ~/.config/tmuxinator/backend-nodejs.yml
 # Template Tmuxinator para Desenvolvimento Backend com Node.js
 
@@ -358,11 +370,11 @@ windows:
       panes:
         - yarn logs # Logs do servidor (ajuste para seu projeto)
         - htop # Monitor de recursos
-EOF
+EOFBACKEND
   print_message "$GREEN" "✅ Template backend-nodejs.yml instalado"
 
   # Fullstack (Next.js) Template
-  cat >"$template_dir/fullstack-nextjs.yml" <<'EOF'
+  cat >"$template_dir/fullstack-nextjs.yml" <<'EOFFULLSTACK'
 # ~/.config/tmuxinator/fullstack-nextjs.yml
 # Template Tmuxinator para Desenvolvimento Fullstack com Next.js
 
@@ -438,32 +450,35 @@ windows:
       # DevOps e deployment
       layout: even-horizontal
       panes:
-        - lazygit # Interface Git
+        - lazygit # Interface TUI para Git
         - # Terminal para deployment
           echo "Comandos de deployment:
           - yarn build (construir para produção)
           - yarn deploy:vercel (deploy para Vercel)
           - yarn docker:build (construir imagem)
           - yarn docker:push (enviar imagem)"
-EOF
+EOFFULLSTACK
   print_message "$GREEN" "✅ Template fullstack-nextjs.yml instalado"
 
-  # Script auxiliar para criar novos projetos
-  cat >"$HOME/.bin/create-project" <<'EOF'
+  # Script auxiliar para criar novos projetos - VERSÃO MELHORADA
+  # Usar tag diferente para o heredoc para evitar conflitos
+  print_message "$BLUE" "Instalando script create-project..."
+  cat >"$HOME/.bin/create-project" <<'EOFCREATEPROJECT'
 #!/bin/bash
 
 # Script para criar novos projetos a partir de templates Tmuxinator
-# Versão corrigida para compatibilidade com diferentes versões do Tmuxinator
+# Versão melhorada com verificação adicional do campo name/project_name
 
 # Cores para melhor legibilidade
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 RED='\033[0;31m'
+BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Verifica argumentos
 if [ "$#" -lt 2 ]; then
-  echo "Uso: create-project <tipo> <nome> [caminho]"
+  echo -e "${YELLOW}Uso: create-project <tipo> <nome> [caminho]${NC}"
   echo "  <tipo>: web-frontend, mobile-react-native, backend-nodejs, fullstack-nextjs"
   echo "  <nome>: Nome do projeto"
   echo "  [caminho]: Caminho do projeto (opcional)"
@@ -486,34 +501,139 @@ fi
 # Cria o diretório do projeto se não existir
 mkdir -p "$caminho"
 
-# Em vez de tentar usar o argumento --project-config (que pode não funcionar em todas as versões),
-# vamos criar diretamente o arquivo .yml para o projeto
-
 # Cria o arquivo de projeto com base no template
 projeto_config="$HOME/.config/tmuxinator/$nome.yml"
 
-# Copiar o template 
-cp "$template_path" "$projeto_config"
+echo -e "${BLUE}Criando projeto '$nome' a partir do template '$tipo'...${NC}"
 
-# Substituir variáveis no arquivo
-echo -e "${YELLOW}Configurando projeto $nome usando template $tipo...${NC}"
+# Método simples sem usar heredoc aninhado
+# Começa com cabeçalho básico e depois anexa o resto do template
+(
+  echo "# Projeto gerado a partir do template $tipo"
+  echo ""
+  echo "# Nome do projeto - IMPORTANTE: Este é o campo que o Tmuxinator procura"
+  echo "name: $nome"
+  echo "project_name: $nome  # Campo redundante para compatibilidade com versões antigas"
+  echo ""
+  echo "# Diretório raiz do projeto"
+  echo "root: $caminho"
+  echo ""
+  echo "# Resto das configurações do template"
+  grep -v "^name:\|^root:" "$template_path"
+) > "$projeto_config"
 
-# Substituir name e root com valores apropriados
-sed -i "s/name: .*$/name: $nome/g" "$projeto_config"
-sed -i "s|root: .*$|root: $caminho|g" "$projeto_config"
+# Verificar se o arquivo foi criado corretamente
+if [ ! -f "$projeto_config" ]; then
+  echo -e "${RED}Erro: Falha ao criar arquivo de configuração do projeto.${NC}"
+  exit 1
+fi
 
-# Caso especial para on_project_exit para garantir que o nome do projeto esteja correto
-if grep -q "on_project_exit.*Projeto encerrado" "$projeto_config"; then
-  sed -i "s/Projeto encerrado: .*\"/Projeto encerrado: $nome\"/g" "$projeto_config"
+# Verifica se o campo name está presente no arquivo gerado
+if ! grep -q "^name: $nome" "$projeto_config"; then
+  echo -e "${YELLOW}Aviso: Campo 'name' não encontrado. Adicionando manualmente...${NC}"
+  # Adiciona o campo name no início do arquivo
+  sed -i "1i name: $nome\nproject_name: $nome" "$projeto_config"
 fi
 
 echo -e "${GREEN}Projeto '$nome' criado com sucesso!${NC}"
-echo -e "${YELLOW}Configuração salva em: $projeto_config${NC}"
+echo -e "${BLUE}Configuração salva em: $projeto_config${NC}"
 echo -e "${GREEN}Para iniciar: tmuxinator start $nome${NC}"
-EOF
-  chmod +x "$HOME/.bin/create-project"
+echo -e "${YELLOW}Para editar a configuração: tmuxinator edit $nome${NC}"
 
-  print_message "$GREEN" "✅ Script utilitário create-project instalado em ~/.bin/create-project"
+# Opção para iniciar o projeto imediatamente
+read -p "Deseja iniciar o projeto agora? (s/N) " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Ss]$ ]]; then
+  echo -e "${BLUE}Iniciando projeto $nome...${NC}"
+  tmuxinator start $nome
+fi
+EOFCREATEPROJECT
+  chmod +x "$HOME/.bin/create-project"
+  print_message "$GREEN" "✅ Script create-project instalado em ~/.bin/create-project"
+
+  # Script para corrigir projetos existentes
+  print_message "$BLUE" "Instalando script fix-tmuxinator-project..."
+  cat >"$HOME/.bin/fix-tmuxinator-project" <<'EOFFIXPROJECT'
+#!/bin/bash
+
+# Script para corrigir projetos Tmuxinator existentes
+# Verifica e adiciona o campo 'name' se estiver faltando
+
+# Cores para melhor legibilidade
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+RED='\033[0;31m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+# Verifica se foi fornecido um nome de projeto
+if [ "$#" -lt 1 ]; then
+  echo -e "${YELLOW}Uso: fix-tmuxinator-project <nome-do-projeto>${NC}"
+  echo "  Exemplo: fix-tmuxinator-project meu-projeto"
+  echo ""
+  echo -e "${BLUE}Projetos disponíveis:${NC}"
+  ls -1 "$HOME/.config/tmuxinator/"*.yml | xargs -n1 basename | sed 's/\.yml$//'
+  exit 1
+fi
+
+nome="$1"
+projeto_config="$HOME/.config/tmuxinator/$nome.yml"
+
+# Verifica se o arquivo de projeto existe
+if [ ! -f "$projeto_config" ]; then
+  echo -e "${RED}Erro: Projeto '$nome' não encontrado em $projeto_config${NC}"
+  echo -e "${BLUE}Projetos disponíveis:${NC}"
+  ls -1 "$HOME/.config/tmuxinator/"*.yml | xargs -n1 basename | sed 's/\.yml$//'
+  exit 1
+fi
+
+echo -e "${BLUE}Analisando projeto '$nome'...${NC}"
+
+# Verificar se o arquivo contém o campo 'name'
+if grep -q "^name: $nome" "$projeto_config"; then
+  echo -e "${GREEN}✓ Campo 'name: $nome' encontrado no arquivo.${NC}"
+else
+  echo -e "${YELLOW}Campo 'name: $nome' não encontrado. Adicionando...${NC}"
+  # Fazer backup do arquivo original
+  cp "$projeto_config" "$projeto_config.bak"
+  echo -e "${BLUE}Backup salvo em $projeto_config.bak${NC}"
+
+  # Adicionar campos name e project_name no início do arquivo
+  sed -i "1i name: $nome\nproject_name: $nome" "$projeto_config"
+  
+  echo -e "${GREEN}✓ Campos 'name' e 'project_name' adicionados ao arquivo.${NC}"
+fi
+
+# Verificar se o campo 'project_name' existe (para compatibilidade máxima)
+if grep -q "^project_name: $nome" "$projeto_config"; then
+  echo -e "${GREEN}✓ Campo 'project_name: $nome' encontrado no arquivo.${NC}"
+else
+  echo -e "${YELLOW}Campo 'project_name: $nome' não encontrado. Adicionando...${NC}"
+  # Fazer backup se ainda não foi feito
+  if [ ! -f "$projeto_config.bak" ]; then
+    cp "$projeto_config" "$projeto_config.bak"
+    echo -e "${BLUE}Backup salvo em $projeto_config.bak${NC}"
+  fi
+
+  # Adicionar campo project_name após o campo name
+  sed -i "/^name:/a project_name: $nome" "$projeto_config"
+  
+  echo -e "${GREEN}✓ Campo 'project_name' adicionado ao arquivo.${NC}"
+fi
+
+echo -e "${GREEN}Projeto '$nome' agora deve iniciar corretamente!${NC}"
+echo -e "${BLUE}Para iniciar: tmuxinator start $nome${NC}"
+
+# Opção para iniciar o projeto imediatamente
+read -p "Deseja iniciar o projeto agora? (s/N) " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Ss]$ ]]; then
+  echo -e "${BLUE}Iniciando projeto $nome...${NC}"
+  tmuxinator start $nome
+fi
+EOFFIXPROJECT
+  chmod +x "$HOME/.bin/fix-tmuxinator-project"
+  print_message "$GREEN" "✅ Script fix-tmuxinator-project instalado em ~/.bin/fix-tmuxinator-project"
 }
 
 # Configurar integração com Neovim
@@ -540,7 +660,7 @@ configure_neovim_integration() {
   # Criar plugin de integração Tmux-Neovim
   local integration_file="$nvim_config_dir/lua/plugins/tmux.lua"
 
-  cat >"$integration_file" <<'EOF'
+  cat >"$integration_file" <<'EOFNVIM'
 return {
   -- Navegação entre painéis do Tmux e janelas do Neovim
   {
@@ -571,7 +691,7 @@ return {
     end,
   },
 }
-EOF
+EOFNVIM
 
   print_message "$GREEN" "✅ Integração com Neovim configurada"
   print_message "$YELLOW" "Nota: Você precisará reiniciar o Neovim para aplicar as alterações"
@@ -581,10 +701,10 @@ EOF
 create_usage_guide() {
   print_message "$BLUE" "Criando guia de uso..."
 
-  # Modificado: Agora o guia será salvo em ~/.config/tmuxinator/README.md
+  # Guia será salvo em ~/.config/tmuxinator/README.md
   local guide_file="$HOME/.config/tmuxinator/README.md"
 
-  cat >"$guide_file" <<'EOF'
+  cat >"$guide_file" <<'EOFGUIDE'
 # Guia de Uso do Tmuxinator para Desenvolvimento
 
 Este guia fornece instruções detalhadas sobre como usar o Tmuxinator para gerenciar seus ambientes de desenvolvimento.
@@ -621,6 +741,20 @@ Os seguintes templates estão disponíveis:
 - `backend-nodejs`: Para desenvolvimento backend com Node.js
 - `fullstack-nextjs`: Para desenvolvimento fullstack com Next.js
 
+## Ferramentas Utilitárias Incluídas
+
+Este setup inclui duas ferramentas úteis:
+
+- `create-project`: Cria novos projetos a partir de templates
+  ```bash
+  create-project <tipo> <nome> [caminho]
+  ```
+
+- `fix-tmuxinator-project`: Corrige problemas em projetos existentes
+  ```bash
+  fix-tmuxinator-project <nome-do-projeto>
+  ```
+
 ## Atalhos do Tmux
 
 Com o prefixo `Ctrl-a`:
@@ -649,8 +783,28 @@ Use `Ctrl-h/j/k/l` para navegar entre painéis do Tmux e janelas do Neovim.
 
 Você pode modificar os templates em `~/.config/tmuxinator/` para adaptá-los às suas necessidades.
 
+## Problemas Comuns e Soluções
+
+### Erro "Your project file didn't specify a 'project_name'"
+
+Se você encontrar este erro, utilize a ferramenta de correção:
+
+```bash
+fix-tmuxinator-project nome-do-projeto
+```
+
+### Problemas com YAML nos templates
+
+Os templates são arquivos YAML com interpolação ERB. Se encontrar erros de sintaxe, certifique-se de que strings com interpolação ERB (`<%= ... %>`) estejam entre aspas simples.
+
+### Problemas de navegação de teclado
+
+Se os atalhos `Ctrl-h/j/k/l` para navegar entre painéis não estiverem funcionando, verifique:
+1. Se o plugin vim-tmux-navigator está instalado no Neovim
+2. Se a configuração de atalhos do Tmux está configurada corretamente no .tmux.conf
+
 Para mais informações, consulte a [documentação oficial do Tmuxinator](https://github.com/tmuxinator/tmuxinator).
-EOF
+EOFGUIDE
 
   print_message "$GREEN" "✅ Guia de uso criado: $guide_file"
 }
@@ -682,6 +836,7 @@ main() {
   print_message "$CYAN" "  - Carregar as configurações do shell: source ~/.bashrc (ou ~/.zshrc)"
   print_message "$CYAN" "  - Criar um novo projeto: create-project <tipo> <nome> [caminho]"
   print_message "$CYAN" "  - Iniciar um projeto: tmuxinator start <nome>"
+  print_message "$CYAN" "  - Corrigir problemas: fix-tmuxinator-project <nome>"
   print_message "$CYAN" "  - Consultar o guia: ~/.config/tmuxinator/README.md"
 }
 
