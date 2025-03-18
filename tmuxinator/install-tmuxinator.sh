@@ -453,6 +453,13 @@ EOF
 #!/bin/bash
 
 # Script para criar novos projetos a partir de templates Tmuxinator
+# Versão corrigida para compatibilidade com diferentes versões do Tmuxinator
+
+# Cores para melhor legibilidade
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+RED='\033[0;31m'
+NC='\033[0m' # No Color
 
 # Verifica argumentos
 if [ "$#" -lt 2 ]; then
@@ -468,21 +475,41 @@ nome="$2"
 caminho="${3:-$HOME/projects/$nome}"
 
 # Verifica se o template existe
-if [ ! -f "$HOME/.config/tmuxinator/$tipo.yml" ]; then
-  echo "Erro: Template '$tipo' não encontrado!"
+template_path="$HOME/.config/tmuxinator/$tipo.yml"
+if [ ! -f "$template_path" ]; then
+  echo -e "${RED}Erro: Template '$tipo' não encontrado!${NC}"
   echo "Templates disponíveis:"
-  ls -1 "$HOME/.config/tmuxinator/"*.yml | xargs -n1 basename | sed 's/\.yml$//'
+  ls -1 "$HOME/.config/tmuxinator/"*.yml | grep -v "$nome.yml" | xargs -n1 basename | sed 's/\.yml$//'
   exit 1
 fi
 
 # Cria o diretório do projeto se não existir
 mkdir -p "$caminho"
 
-# Cria o projeto Tmuxinator
-tmuxinator new "$nome" --project-config="$HOME/.config/tmuxinator/$tipo.yml" "$nome" "$caminho"
+# Em vez de tentar usar o argumento --project-config (que pode não funcionar em todas as versões),
+# vamos criar diretamente o arquivo .yml para o projeto
 
-echo "Projeto '$nome' criado com sucesso!"
-echo "Para iniciar: tmuxinator start $nome"
+# Cria o arquivo de projeto com base no template
+projeto_config="$HOME/.config/tmuxinator/$nome.yml"
+
+# Copiar o template 
+cp "$template_path" "$projeto_config"
+
+# Substituir variáveis no arquivo
+echo -e "${YELLOW}Configurando projeto $nome usando template $tipo...${NC}"
+
+# Substituir name e root com valores apropriados
+sed -i "s/name: .*$/name: $nome/g" "$projeto_config"
+sed -i "s|root: .*$|root: $caminho|g" "$projeto_config"
+
+# Caso especial para on_project_exit para garantir que o nome do projeto esteja correto
+if grep -q "on_project_exit.*Projeto encerrado" "$projeto_config"; then
+  sed -i "s/Projeto encerrado: .*\"/Projeto encerrado: $nome\"/g" "$projeto_config"
+fi
+
+echo -e "${GREEN}Projeto '$nome' criado com sucesso!${NC}"
+echo -e "${YELLOW}Configuração salva em: $projeto_config${NC}"
+echo -e "${GREEN}Para iniciar: tmuxinator start $nome${NC}"
 EOF
   chmod +x "$HOME/.bin/create-project"
 
