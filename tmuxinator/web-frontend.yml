@@ -1,0 +1,50 @@
+# ~/.config/tmuxinator/web-frontend.yml
+# Template Tmuxinator para Desenvolvimento Web Frontend (React, Vue, Angular)
+
+name: <%= @args[0] %>
+root: <%= @args[1] || "~/projects/#{@args[0]}" %>
+
+# Configurações de projeto - Altere conforme necessário
+on_project_first_start: yarn install
+on_project_restart: yarn install
+on_project_stop: docker-compose down
+# Aspas simples externas para evitar problemas com o YAML
+on_project_exit: 'echo "Projeto encerrado: <%= @args[0] %>"'
+tmux_command: tmux -2
+
+# Layout otimizado para desenvolvimento web
+windows:
+  - editor:
+      # Layout com editor principal e terminal secundário
+      layout: main-vertical
+      panes:
+        - nvim # Editor principal
+        - # Terminal para comandos rápidos
+          
+  - servers:
+      # Servidores de desenvolvimento e assets
+      layout: even-horizontal
+      panes:
+        - yarn dev # Servidor de desenvolvimento (ajuste para npm start/npm run dev conforme necessário)
+        - yarn storybook # Storybook para componentes
+
+  - tests:
+      # Testes e validação
+      layout: even-horizontal
+      panes:
+        - yarn test:watch # Testes unitários
+        - yarn lint:watch # Linter
+
+  - git:
+      # Controle de versão e logs
+      layout: even-horizontal
+      panes:
+        - lazygit # Interface TUI para Git
+        - # Terminal para log/histórico
+
+  - monitoring:
+      # Monitoramento de recursos e performance
+      layout: even-horizontal  
+      panes: 
+        - yarn build:analyze # Analisador de bundle (ajuste conforme sua configuração)
+        - htop # Monitor de recursos

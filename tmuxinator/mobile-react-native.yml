@@ -1,0 +1,60 @@
+# ~/.config/tmuxinator/mobile-react-native.yml
+# Template Tmuxinator para Desenvolvimento Mobile com React Native
+
+name: <%= @args[0] %>
+root: <%= @args[1] || "~/projects/#{@args[0]}" %>
+
+# Configurações de projeto
+on_project_first_start: yarn install
+on_project_restart: yarn install
+tmux_command: tmux -2
+
+# Layout otimizado para desenvolvimento mobile
+windows:
+  - editor:
+      # Layout com editor principal e terminal secundário
+      layout: main-vertical
+      panes:
+        - nvim # Editor principal
+        - # Terminal para comandos rápidos
+          
+  - metro:
+      # Metro bundler e emuladores
+      layout: even-horizontal
+      panes:
+        - yarn start # Metro bundler
+        - echo "Comandos úteis:
+          - yarn android (iniciar app no Android)
+          - yarn ios (iniciar app no iOS)
+          - yarn lint (verificar código)
+          - yarn test (executar testes)"
+
+  - simulators:
+      # Controle de emuladores/simuladores
+      layout: even-horizontal
+      panes:
+        - # Comandos Android
+          echo "Comandos Android:
+          - emulator -list-avds (listar AVDs)
+          - emulator -avd [nome] (iniciar emulador)
+          - adb devices (listar dispositivos)
+          - adb logcat (ver logs)"
+        - # Comandos iOS
+          echo "Comandos iOS:
+          - xcrun simctl list (listar simuladores)
+          - xcrun simctl boot [nome] (iniciar simulador)
+          - xcrun simctl log [nome] (ver logs)"
+
+  - tests:
+      # Testes e análise de código
+      layout: even-horizontal
+      panes:
+        - yarn test:watch # Testes unitários
+        - # Terminal para debugging
+
+  - git:
+      # Controle de versão
+      layout: even-horizontal
+      panes:
+        - lazygit # Interface TUI para Git
+        - # Terminal para revisar mudanças

@@ -1,0 +1,63 @@
+# ~/.config/tmuxinator/backend-nodejs.yml
+# Template Tmuxinator para Desenvolvimento Backend com Node.js
+
+name: <%= @args[0] %>
+root: <%= @args[1] || "~/projects/#{@args[0]}" %>
+
+# Configurações de projeto
+on_project_first_start: 
+  - yarn install
+  - docker-compose up -d
+on_project_restart: docker-compose restart
+on_project_stop: docker-compose down
+tmux_command: tmux -2
+
+# Layout otimizado para desenvolvimento backend
+windows:
+  - editor:
+      # Layout com editor principal e terminal secundário
+      layout: main-vertical
+      panes:
+        - nvim # Editor principal
+        - # Terminal para comandos rápidos
+          
+  - server:
+      # Servidor e API
+      layout: even-horizontal
+      panes:
+        - yarn dev # Servidor de desenvolvimento
+        - # Terminal para testes de API
+          echo "Comandos úteis:
+          - curl (testar endpoints)
+          - http (HTTPie)
+          - jq (formatar JSON)
+          - ab (benchmark de API)"
+
+  - database:
+      # Gestão de banco de dados
+      layout: even-horizontal
+      panes:
+        - docker-compose ps # Status dos containers
+        - # Terminal para comandos DB
+          echo "Comandos úteis:
+          - docker-compose logs -f db (logs do banco)
+          - mongosh (cli MongoDB)
+          - psql (cli PostgreSQL)
+          - mysql (cli MySQL)
+          - redis-cli (cli Redis)"
+
+  - tests:
+      # Testes e documentação
+      layout: tiled
+      panes:
+        - yarn test:watch # Testes unitários
+        - yarn test:e2e # Testes E2E
+        - # Terminal para testes de carga
+        - # Terminal para cobertura de código
+
+  - logs:
+      # Logs e monitoramento
+      layout: even-horizontal
+      panes:
+        - yarn logs # Logs do servidor (ajuste para seu projeto)
+        - htop # Monitor de recursos

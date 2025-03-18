@@ -1,0 +1,82 @@
+# ~/.config/tmuxinator/fullstack-nextjs.yml
+# Template Tmuxinator para Desenvolvimento Fullstack com Next.js
+
+name: <%= @args[0] %>
+root: <%= @args[1] || "~/projects/#{@args[0]}" %>
+
+# Configurações de projeto
+on_project_first_start: 
+  - yarn install
+  - docker-compose up -d
+on_project_restart: 
+  - docker-compose restart
+  - yarn prisma generate
+on_project_stop: docker-compose down
+tmux_command: tmux -2
+
+# Layout otimizado para desenvolvimento fullstack
+windows:
+  - editor:
+      # Layout com editor principal para código
+      layout: main-vertical
+      panes:
+        - nvim # Editor principal
+        - # Terminal para comandos rápidos
+          
+  - frontend:
+      # Desenvolvimento do frontend
+      layout: even-horizontal
+      panes:
+        - yarn dev # Servidor de desenvolvimento Next.js
+        - # Terminal para gestão de componentes
+          echo "Comandos úteis:
+          - yarn storybook (iniciar Storybook)
+          - yarn analyze (analisar bundle)
+          - yarn cypress (testes E2E)"
+
+  - backend:
+      # Desenvolvimento do backend/API
+      layout: even-horizontal
+      panes:
+        - # Terminal para gestão de API
+          echo "Comandos úteis:
+          - yarn prisma studio (interface BD)
+          - yarn prisma migrate (migrar BD)
+          - yarn seed (popular BD)"
+        - # Terminal para logs e debug API
+          echo "Comandos úteis:
+          - yarn logs:api (ver logs)
+          - yarn trace:api (ver traces)"
+
+  - database:
+      # Gestão de banco de dados
+      layout: even-horizontal
+      panes:
+        - docker-compose ps # Status dos containers
+        - # Terminal para comandos diretos DB
+          echo "Bancos de dados:
+          - PostgreSQL: psql -U postgres -h localhost
+          - MySQL: mysql -u root -p
+          - MongoDB: mongosh
+          - Redis: redis-cli"
+
+  - tests:
+      # Testes e validação
+      layout: tiled
+      panes:
+        - yarn test:unit # Testes unitários
+        - yarn test:integration # Testes de integração 
+        - yarn lint # Linting do código
+        - yarn typecheck # Verificação de tipos (TypeScript)
+
+  - ops:
+      # DevOps e deployment
+      layout: even-horizontal
+      panes:
+        - lazygit # Interface Git
+        - # Terminal para deployment
+          echo "Comandos de deployment:
+          - yarn build (construir para produção)
+          - yarn deploy:vercel (deploy para Vercel)
+          - yarn docker:build (construir imagem)
+          - yarn docker:push (enviar imagem)"

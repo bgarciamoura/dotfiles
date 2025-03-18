@@ -1,0 +1,25 @@
+# Layout de desenvolvimento padrão
+# Editor à esquerda (70%), terminais à direita (30%)
+
+# Limpar janela atual (fechar todos os painéis exceto o primeiro)
+kill-pane -a
+
+# Dividir a janela horizontalmente (70% esquerda, 30% direita)
+split-window -h -l 30
+
+# Dividir o painel direito verticalmente
+split-window -v -l 60
+
+# Voltar para o primeiro painel (editor)
+select-pane -t 1
+
+# Iniciar aplicativos (descomente conforme necessário)
+send-keys 'cd ~/projetos' Enter
+send-keys 'nvim' Enter
+select-pane -t 2
+send-keys 'ls -la' Enter
+select-pane -t 3
+send-keys 'htop' Enter
+
+# Retornar ao painel do editor
+select-pane -t 1
