@@ -32,6 +32,15 @@ return {
 	animation_fps = 60,
 	enable_scroll_bar = true,
 
+	-- Melhorar integração com Tmux
+	allow_square_glyphs_to_overflow_width = "WhenFollowedBySpace",
+	custom_block_glyphs = true,
+	warn_about_missing_glyphs = false,
+
+	-- Acertar a sinalização de teclas no terminal para melhor compatibilidade com Tmux e Neovim
+	enable_kitty_keyboard = true,
+	enable_csi_u_key_encoding = true,
+
 	-- Performance settings
 	front_end = "WebGpu", -- Can be "WebGpu" or "Software"
 	webgpu_power_preference = "HighPerformance",

@@ -79,21 +79,8 @@ return {
 	enable_tab_bar = true,
 	tab_bar_at_bottom = true,
 	use_fancy_tab_bar = false,
-	hide_tab_bar_if_only_one_tab = true,
 	tab_max_width = 25,
 	show_tab_index_in_tab_bar = true,
-	tab_bar_style = {
-		new_tab = wezterm.format({
-			{ Background = { Color = "#292e42" } },
-			{ Foreground = { Color = "#a9b1d6" } },
-			{ Text = " + " },
-		}),
-		new_tab_hover = wezterm.format({
-			{ Background = { Color = "#3b4261" } },
-			{ Foreground = { Color = "#7aa2f7" } },
-			{ Text = " + " },
-		}),
-	},
 
 	-- Tab format handled by the format-tab-title event in events.lua
 
