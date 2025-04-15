@@ -24,6 +24,10 @@ export PATH="/opt/homebrew/bin:$PATH"
 # Adiciona ~/.local/bin ao PATH
 export PATH="$HOME/.local/bin:$PATH"
 
+# Adiciona o java ao PATH e define a versão padrão 
+export JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64"
+export PATH="$JAVA_HOME/bin:$PATH"
+
 # ===[ Inicialização do Zinit ]=== #
 # Framework para gerenciar plugins e completions
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
@@ -189,3 +193,25 @@ typeset -U path
 # Desabilite compinit verificando todos os possíveis aliases
 unsetopt complete_aliases
 
+
+# pnpm
+export PNPM_HOME="/home/vycros/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# Tmuxinator aliases
+alias mux='tmuxinator'
+alias txs='tmuxinator start'
+alias txn='tmuxinator new'
+alias txl='tmuxinator list'
+
+# Alias para abrir a config do nvim
+alias nvimconfig='nvim ~/.config/nvim'
+
+# Alias para abrir a config do zsh
+alias zshconfig='nvim ~/.config/zsh'
+export PATH="$HOME/.bin:$PATH"
+source /home/vycros/.bin/tmuxinator.zsh

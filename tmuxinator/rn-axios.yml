@@ -1,0 +1,33 @@
+# Projeto gerado a partir do template mobile-react-native
+
+# Nome do projeto - IMPORTANTE: Este é o campo que o Tmuxinator procura
+name: rn-axios
+project_name: rn-axios  # Campo redundante para compatibilidade com versões antigas
+
+# Diretório raiz do projeto
+root: /home/vycros/projects/rn-axios
+
+# Resto das configurações do template
+# ~/.config/tmuxinator/mobile-react-native.yml
+# Template Tmuxinator para Desenvolvimento Mobile com React Native
+
+
+# Configurações de projeto
+on_project_first_start: pnpm install
+tmux_command: tmux -2
+
+# Layout otimizado para desenvolvimento mobile
+windows:
+  - editor:
+      # Layout com editor principal e terminal secundário
+      layout: main-horizontal
+      panes:
+        - nvim # Editor principal
+        - # Terminal para comandos rápidos
+          
+  - metro:
+      # Metro bundler e emuladores
+      layout: even-horizontal
+      panes:
+        - pnpm start # Metro bundler
+

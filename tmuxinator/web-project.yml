@@ -1,0 +1,16 @@
+---
+name: <%= @args[0] %>
+root: <%= @args[1] || "~/projects/#{@args[0]}" %>
+on_project_stop: docker compose down
+tmux_command: tmux -2
+windows:
+  - project:
+      layout: main-horizontal
+      panes:
+        - nvim
+        - docker compose up
+        -
+  - monitoring:
+      layout: even-horizontal
+      panes:
+        - htop
