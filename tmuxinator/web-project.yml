@@ -10,7 +10,3 @@ windows:
         - nvim
         - docker compose up
         -
-  - monitoring:
-      layout: even-horizontal
-      panes:
-        - htop

@@ -6,7 +6,7 @@
 # Criado para substituir a configuração Fish
 
 # ===[ Configurações básicas ]=== #
-export TERM="xterm-256color"                # Suporte a cores completo
+export TERM="tmux-256color"                # Suporte a cores completo
 export EDITOR='nvim'                        # Neovim como editor padrão
 export VISUAL='nvim'                        # Neovim para edição visual
 export HISTFILE=~/.zsh_history              # Arquivo de histórico
@@ -215,3 +215,4 @@ alias nvimconfig='nvim ~/.config/nvim'
 alias zshconfig='nvim ~/.config/zsh'
 export PATH="$HOME/.bin:$PATH"
 source /home/vycros/.bin/tmuxinator.zsh
+
