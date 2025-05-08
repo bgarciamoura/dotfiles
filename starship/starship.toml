@@ -1,0 +1,160 @@
+# Starship config com tema Kanagawa Dragon
+
+# Formato principal com separadores diagonais
+format = """
+[](fg:#C4746E)\
+$os\
+[](fg:#8A9A7B)\
+$username\
+[](fg:#C4B28A)\
+$directory\
+[](fg:#C4B28A bg:none)\
+$fill\
+[](fg:#8BA4B0)\
+$git_branch\
+$git_status\
+[](fg:#A292A3)\
+$nodejs\
+$python\
+$rust\
+$golang\
+[](fg:#8EA4A2)\
+$time\
+[](fg:#8EA4A2)\
+$line_break\
+$character
+"""
+
+# Tempo máximo de execução de comandos internos
+command_timeout = 5000
+
+# Fill entre esquerda e direita
+[fill]
+symbol = " "
+style = "bg:none"
+
+# Símbolos de prompt
+[character]
+success_symbol = "[↯](bold #8EA4A2)"
+error_symbol = "[✗](bold #C4746E)"
+vimcmd_symbol = "[V](bold #8A9A7B)"
+
+# Sistema operacional
+[os]
+format = "[$symbol](bg:#C4746E fg:#181616) "
+disabled = false
+
+[os.symbols]
+Windows = "󰍲"
+Macos = "󰀵"
+Linux = "󰌽"
+Ubuntu = "󰕈"
+Debian = "󰣚"
+Raspbian = "󰐿"
+Mint = "󰣭"
+Fedora = "󰣛"
+CentOS = "󰣨"
+Alpine = "󰣿"
+Arch = "󰣇"
+Amazon = "󰣴"
+
+# Nome do usuário
+[username]
+format = '[$user ]($style)'
+style_user = "bg:#8A9A7B fg:#181616 bold"
+style_root = "bg:#8A9A7B fg:#C4746E bold"
+disabled = false
+show_always = true
+
+# Diretório atual
+[directory]
+style = "bg:#C4B28A fg:#181616 bold"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+read_only = " "
+read_only_style = "bg:#C4B28A fg:#C4746E"
+
+# Branch Git
+[git_branch]
+symbol = "󱓞 "
+style = "bg:#8BA4B0 fg:#181616 bold"
+format = '[ $symbol$branch ]($style)'
+truncation_length = 20
+truncation_symbol = "…"
+
+# Status do Git
+[git_status]
+style = "bg:#8BA4B0 fg:#181616"
+format = '[$all_status$ahead_behind ]($style)'
+conflicted = "⚠️ "
+ahead = "⟫${count} "
+behind = "⟪${count} "
+diverged = "⥮${ahead_count}⥯${behind_count} "
+untracked = "◌${count} "
+stashed = "✱${count} "
+modified = "✶${count} "
+staged = "✓${count} "
+renamed = "⟿${count} "
+deleted = "✘${count} "
+
+# Node.js
+[nodejs]
+symbol = "󰎙 "
+style = "bg:#A292A3 fg:#181616"
+format = '[ $symbol($version) ]($style)'
+detect_extensions = ["js", "jsx", "ts", "tsx", "mjs", "cjs"]
+detect_files = ["package.json", ".node-version", ".nvmrc"]
+detect_folders = ["node_modules"]
+
+# Python
+[python]
+symbol = "󰌠 "
+style = "bg:#A292A3 fg:#181616"
+format = '[ $symbol($version) ]($style)'
+detect_extensions = ["py", "pyc", "pyd"]
+detect_files = ["requirements.txt", "pyproject.toml", "Pipfile", "__init__.py"]
+detect_folders = [".venv", "venv", ".env", "env"]
+
+# Rust
+[rust]
+symbol = "󱘗 "
+style = "bg:#A292A3 fg:#181616"
+format = '[ $symbol($version) ]($style)'
+detect_extensions = ["rs"]
+detect_files = ["Cargo.toml"]
+
+# Go
+[golang]
+symbol = "󰟓 "
+style = "bg:#A292A3 fg:#181616"
+format = '[ $symbol($version) ]($style)'
+detect_extensions = ["go"]
+detect_files = ["go.mod", "go.sum", "go.work", "main.go"]
+detect_folders = ["Godeps"]
+
+# Hora atual
+[time]
+disabled = false
+time_format = "%H:%M"
+style = "bg:#8EA4A2 fg:#181616 bold"
+format = '[ 󱑍 $time ]($style)'
+
+# Bateria
+[battery]
+full_symbol = "󰁹 "
+charging_symbol = "󰂄 "
+discharging_symbol = "󰂃 "
+format = "[$symbol$percentage]($style) "
+disabled = false
+
+[[battery.display]]
+threshold = 30
+style = "bold #C4746E"
+
+# Status do último comando
+[status]
+format = "[$symbol$status]($style) "
+disabled = false
+symbol = "⚠️ "
+style = "bold #C4746E"
