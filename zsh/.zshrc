@@ -17,16 +17,28 @@ setopt HIST_SAVE_NO_DUPS                    # Não salvar duplicatas
 setopt INC_APPEND_HISTORY                   # Adicionar comandos ao histórico imediatamente
 setopt EXTENDED_HISTORY                     # Salvar timestamp
 setopt HIST_EXPIRE_DUPS_FIRST               # Remover duplicatas primeiro quando HISTSIZE é excedido
-
+alias tmux="TERM=screen-256color-bce tmux"
 # ===[ Path customizado ]=== #
 # Adiciona homebrew ao PATH
 export PATH="/opt/homebrew/bin:$PATH"
 # Adiciona ~/.local/bin ao PATH
 export PATH="$HOME/.local/bin:$PATH"
 
+# Adiciona o nvim ao PATH
+export PATH="$PATH:/opt/nvim/"
+
 # Adiciona o java ao PATH e define a versão padrão 
 export JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64"
 export PATH="$JAVA_HOME/bin:$PATH"
+
+# Adiciona o Android SDK ao PATH
+export ANDROID_HOME="/mnt/c/Users/bgarc/AppData/Local/Android/Sdk"
+
+# Adiciona ferramentas do Android ao PATH
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/tools/bin
+export PATH=$PATH:$ANDROID_HOME/emulator
 
 # ===[ Inicialização do Zinit ]=== #
 # Framework para gerenciar plugins e completions
@@ -170,9 +182,6 @@ done
 compinit -C
 
 # ===[ Prompts e temas ]=== #
-# Starship - prompt multi-shell customizável
-export STARSHIP_CONFIG=~/.config/starship/starship.toml starship prompt
-eval "$(starship init zsh)"
 
 # Acelerar o prompt do Git
 function git_prompt_info() {
@@ -215,4 +224,3 @@ alias nvimconfig='nvim ~/.config/nvim'
 alias zshconfig='nvim ~/.config/zsh'
 export PATH="$HOME/.bin:$PATH"
 source /home/vycros/.bin/tmuxinator.zsh
-
