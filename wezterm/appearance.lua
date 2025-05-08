@@ -1,102 +1,104 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
 
--- Custom cyberpunk theme with soft neon colors
-local cyberpunk_theme = {
-	foreground = "#e0e0e0",
-	background = "#0d1117",
-	cursor_bg = "#ff2a6d",
-	cursor_border = "#ff2a6d",
-	cursor_fg = "#0d1117",
-	selection_bg = "#3d5566",
-	selection_fg = "#e0e0e0",
+-- Tema Kanagawa Dragon (cores oficiais)
+local kanagawa_dragon = {
+	-- Texto e fundo
+	foreground = "#c5c9c5",
+	background = "#181616",
 
+	-- Cursor
+	cursor_bg = "#C8C093",
+	cursor_fg = "#C8C093",
+	cursor_border = "#C8C093",
+
+	-- Seleção
+	selection_fg = "#C8C093",
+	selection_bg = "#2D4F67",
+
+	-- Barra de rolagem e divisores
+	scrollbar_thumb = "#16161D",
+	split = "#16161D",
+
+	-- ANSI padrão
 	ansi = {
-		"#0d1117", -- Black
-		"#ff2a6d", -- Red
-		"#05d9e8", -- Green
-		"#f9c80e", -- Yellow
-		"#01c5c4", -- Blue
-		"#b967ff", -- Magenta
-		"#00feca", -- Cyan
-		"#e0e0e0", -- White
+		"#0D0C0C", -- Black
+		"#C4746E", -- Red
+		"#8A9A7B", -- Green
+		"#C4B28A", -- Yellow
+		"#8BA4B0", -- Blue
+		"#A292A3", -- Magenta
+		"#8EA4A2", -- Cyan
+		"#C8C093", -- White
 	},
 
+	-- ANSI brilhante
 	brights = {
-		"#2c333c", -- Bright Black
-		"#ff6e96", -- Bright Red
-		"#6bffe9", -- Bright Green
-		"#fcdc4d", -- Bright Yellow
-		"#67d7ee", -- Bright Blue
-		"#d6afff", -- Bright Magenta
-		"#64ffda", -- Bright Cyan
-		"#ffffff", -- Bright White
+		"#A6A69C", -- Bright Black
+		"#E46876", -- Bright Red
+		"#87A987", -- Bright Green
+		"#E6C384", -- Bright Yellow
+		"#7FB4CA", -- Bright Blue
+		"#938AA9", -- Bright Magenta
+		"#7AA89F", -- Bright Cyan
+		"#C5C9C5", -- Bright White
 	},
 }
 
--- Tab styling is handled in events.lua via the format-tab-title event
-
--- Configuration for window frame
+-- Configuração do frame da janela
 local window_frame = {
 	font = wezterm.font({ family = "RobotoMono Nerd Font", weight = "Bold" }),
 	font_size = 10.0,
-	active_titlebar_bg = "#0d1117",
-	inactive_titlebar_bg = "#0d1117",
+	active_titlebar_bg = "#181616",
+	inactive_titlebar_bg = "#181616",
 }
 
--- Appearance configuration
 return {
-	-- Initial window size
+	-- Inverte vídeo do cursor para mantê-lo visível
+	force_reverse_video_cursor = true,
+
+	-- Tamanho inicial
 	initial_rows = 50,
 	initial_cols = 140,
 
-	-- Font settings
+	-- Fonte principal
 	font = wezterm.font_with_fallback({
-		{ family = "RobotoMono Nerd Font", weight = "Medium" },
-		{ family = "JetBrainsMono Nerd Font", weight = "Medium" },
+		{ family = "Iosevka Nerd Font", weight = "Regular", scale = 1.1 },
+		{ family = "RobotoMono Nerd Font", weight = "Regular" },
+		{ family = "JetBrainsMono Nerd Font", weight = "Regular" },
 		{ family = "Symbols Nerd Font Mono", scale = 0.9 },
 	}),
 	font_size = 10,
 	line_height = 1.1,
 
-	-- Window appearance
-	window_padding = {
-		left = 5,
-		right = 5,
-		top = 5,
-		bottom = 5,
-	},
+	-- Padding e opacidade
+	window_padding = { left = 0, right = 0, top = 0, bottom = 5 },
 	window_background_opacity = 0.95,
 	text_background_opacity = 1.0,
 	window_decorations = "TITLE | RESIZE",
 	window_frame = window_frame,
 
-	-- Colors and themes
-	color_scheme = "Catppuccin Mocha", -- Base theme
-	colors = cyberpunk_theme, -- Uncomment to use custom theme
+	-- Aplica o tema Kanagawa Dragon
+	colors = kanagawa_dragon,
 
-	-- Tab bar configuration
+	-- Barra de abas
 	enable_tab_bar = true,
 	tab_bar_at_bottom = true,
 	use_fancy_tab_bar = false,
 	tab_max_width = 25,
 	show_tab_index_in_tab_bar = true,
 
-	-- Tab format handled by the format-tab-title event in events.lua
-
-	-- Background effects
+	-- Background customizado
 	background = {
 		{
-			source = {
-				File = wezterm.config_dir .. "/background.jpg",
-			},
+			source = { File = wezterm.config_dir .. "/background.jpg" },
 			width = "100%",
 			height = "100%",
 			opacity = 0.07,
 		},
 	},
 
-	-- Cursor configuration
+	-- Cursor piscante em bloco
 	default_cursor_style = "BlinkingBlock",
 	cursor_thickness = 2,
 }
