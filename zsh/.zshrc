@@ -28,7 +28,7 @@ export PATH="$HOME/.local/bin:$PATH"
 export PATH="$PATH:/opt/nvim/"
 
 # Adiciona o java ao PATH e define a versão padrão 
-export JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64"
+export JAVA_HOME="/opt/homebrew/opt/openjdk@17"
 export PATH="$JAVA_HOME/bin:$PATH"
 
 # Adiciona o Android SDK ao PATH
@@ -204,7 +204,7 @@ unsetopt complete_aliases
 
 
 # pnpm
-export PNPM_HOME="/home/vycros/.local/share/pnpm"
+export PNPM_HOME="/Users/bgmoura/.local/share/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
@@ -224,3 +224,29 @@ alias nvimconfig='nvim ~/.config/nvim'
 alias zshconfig='nvim ~/.config/zsh'
 export PATH="$HOME/.bin:$PATH"
 source /home/vycros/.bin/tmuxinator.zsh
+source /Users/bgmoura/.bin/tmuxinator.zsh
+
+
+# macOS specific aliases
+alias showfiles="defaults write com.apple.finder AppleShowAllFiles YES; killall Finder"
+alias hidefiles="defaults write com.apple.finder AppleShowAllFiles NO; killall Finder"
+alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
+alias flushdns="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
+# Melhores alternativas para comandos padrão
+if command -v exa &> /dev/null; then
+  alias ls="exa --icons --group-directories-first"
+  alias ll="exa --icons --group-directories-first -la"
+  alias la="exa --icons --group-directories-first -a"
+  alias lt="exa --icons --group-directories-first -T"
+  alias l="exa --icons --group-directories-first -l"
+fi
+if command -v bat &> /dev/null; then
+  alias cat="bat --style=plain"
+fi
+if command -v fd &> /dev/null; then
+  alias find="fd"
+fi
+if command -v rg &> /dev/null; then
+  alias grep="rg"
+fi
+export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
